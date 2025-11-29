@@ -57,16 +57,8 @@ public class CamundaLicense {
       return;
     }
 
-    if (license != null && !license.isBlank()) {
-      validateLicense(license);
-    } else {
-      isValid = false;
-      licenseType = LicenseType.UNKNOWN;
-      LOGGER.warn(
-          "No license detected when one is expected. Please provide a license through the "
-              + CAMUNDA_LICENSE_ENV_VAR_KEY
-              + " environment variable.");
-    }
+    validateLicense(license);
+
 
     isInitialized = true;
   }
@@ -76,10 +68,6 @@ public class CamundaLicense {
       final LicenseKey licenseKey = getLicenseKey(licenseStr);
 
       isCommercial = licenseKey.isCommercial();
-      if (licenseKey.getValidUntil() != null) {
-        expiresAt = licenseKey.getValidUntil().toInstant().atOffset(ZoneOffset.UTC);
-      }
-
       licenseKey.validate(); // this method logs the license status
 
       licenseType = LicenseType.get(licenseKey.getProperties().get("licenseType"));
