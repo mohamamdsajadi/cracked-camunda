@@ -23,11 +23,14 @@ public class CamundaLicense {
 
   public static final String CAMUNDA_LICENSE_ENV_VAR_KEY = "CAMUNDA_LICENSE_KEY";
   private static final Logger LOGGER = LoggerFactory.getLogger(CamundaLicense.class);
-  LocalDateTime ldt = LocalDateTime.of(2025, 1, 1, 10, 30);
+  LocalDateTime ldt = LocalDateTime.of(2055, 1, 1, 10, 30);
   private final boolean isValid = true;
   private final LicenseType licenseType = LicenseType.PRODUCTION;
   private final boolean isCommercial = true;
-  private final OffsetDateTime expiresAt = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant()).toInstant().atOffset(ZoneOffset.UTC);
+  private final OffsetDateTime expiresAt =
+      Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant())
+          .toInstant()
+          .atOffset(ZoneOffset.UTC);
   private final boolean isInitialized = true;
 
   @VisibleForTesting
@@ -53,12 +56,9 @@ public class CamundaLicense {
     return expiresAt;
   }
 
-  public synchronized void initializeWithLicense(final String license) {
-  }
+  public synchronized void initializeWithLicense(final String license) {}
 
-  private void validateLicense(final String licenseStr) {
-
-  }
+  private void validateLicense(final String licenseStr) {}
 
   @VisibleForTesting
   protected LicenseKey getLicenseKey(final String licenseStr) throws InvalidLicenseException {

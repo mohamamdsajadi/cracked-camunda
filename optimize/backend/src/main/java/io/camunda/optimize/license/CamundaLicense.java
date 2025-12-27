@@ -8,7 +8,6 @@
 package io.camunda.optimize.license;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import org.camunda.bpm.licensecheck.InvalidLicenseException;
 import org.camunda.bpm.licensecheck.LicenseKey;
 import org.camunda.bpm.licensecheck.LicenseKeyImpl;
@@ -58,7 +57,6 @@ public class CamundaLicense {
     }
 
     validateLicense(license);
-
 
     isInitialized = true;
   }
