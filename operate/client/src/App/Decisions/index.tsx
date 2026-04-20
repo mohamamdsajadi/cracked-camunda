@@ -16,12 +16,14 @@ import {Filters} from './Filters';
 import {groupedDecisionsStore} from 'modules/stores/groupedDecisions';
 import {useLocation, type Location} from 'react-router-dom';
 import {OperationsPanel} from 'modules/components/OperationsPanel';
+import {useLocalization} from 'modules/i18n';
 
 type LocationType = Omit<Location, 'state'> & {
   state: {refreshContent?: boolean};
 };
 
 const Decisions: React.FC = () => {
+  const {t} = useLocalization();
   const location = useLocation() as LocationType;
 
   useEffect(() => {
@@ -40,7 +42,7 @@ const Decisions: React.FC = () => {
 
   return (
     <>
-      <VisuallyHiddenH1>Operate Decision Instances</VisuallyHiddenH1>
+      <VisuallyHiddenH1>{t('Operate Decision Instances')}</VisuallyHiddenH1>
       <InstancesList
         type="decision"
         leftPanel={<Filters />}

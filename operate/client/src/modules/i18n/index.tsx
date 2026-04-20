@@ -76,6 +76,10 @@ function getMessage(language: string, key: string): string {
   );
 }
 
+function translate(key: string): string {
+  return getMessage(getInitialLanguage(), key);
+}
+
 type LocalizationContextValue = {
   language: string;
   t: (key: string) => string;
@@ -116,4 +120,4 @@ const LocalizationProvider: FC<{children: ReactNode}> = ({children}) => {
 
 const useLocalization = () => useContext(localizationContext);
 
-export {LocalizationProvider, languageItems, useLocalization};
+export {LocalizationProvider, languageItems, useLocalization, translate};

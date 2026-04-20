@@ -7,15 +7,16 @@
  */
 
 import pluralSuffix from 'modules/utils/pluralSuffix';
+import {translate} from 'modules/i18n';
 
 function getAccordionTitle(
   instancesWithErrorCount: number,
   errorMessage: string,
 ) {
-  return `View ${pluralSuffix(
+  return `${translate('View')} ${pluralSuffix(
     instancesWithErrorCount,
-    'Instance',
-  )} with error ${errorMessage}`;
+    translate('Instance'),
+  )} ${translate('with error')} ${errorMessage}`;
 }
 
 export {getAccordionTitle};

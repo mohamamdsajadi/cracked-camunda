@@ -7,6 +7,7 @@
  */
 
 import pluralSuffix from 'modules/utils/pluralSuffix';
+import {translate} from 'modules/i18n';
 
 function getAccordionLabel({
   name,
@@ -21,8 +22,8 @@ function getAccordionLabel({
 }) {
   return `${name} – ${pluralSuffix(
     instancesCount,
-    'Instance',
-  )} in ${pluralSuffix(versionsCount, 'Version')}${
+    translate('Instance'),
+  )} ${translate('in')} ${pluralSuffix(versionsCount, translate('Version'))}${
     tenant ? ` – ${tenant}` : ''
   }`;
 }
