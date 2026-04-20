@@ -1,0 +1,20 @@
+{
+  "header.aria.appPanel": "App panel",
+  "header.app.name": "Operate",
+  "header.nav.dashboard": "Dashboard",
+  "header.nav.processes": "Processes",
+  "header.nav.decisions": "Decisions",
+  "header.info.documentation": "Documentation",
+  "header.info.academy": "Camunda Academy",
+  "header.info.feedbackSupport": "Feedback and Support",
+  "header.info.community": "Community Forum",
+  "header.info.aria": "Info",
+  "header.user.settingsAria": "Settings",
+  "header.user.profile": "Profile",
+  "header.user.cookiePreferences": "Cookie preferences",
+  "header.user.terms": "Terms of use",
+  "header.user.privacy": "Privacy policy",
+  "header.user.imprint": "Imprint",
+  "header.user.logout": "Log out",
+  "header.language.label": "Language"
+}

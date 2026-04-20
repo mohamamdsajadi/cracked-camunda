@@ -10,6 +10,7 @@ import {useEffect, useState} from 'react';
 import {observer} from 'mobx-react-lite';
 import {Link} from 'react-router-dom';
 import {ArrowRight} from '@carbon/react/icons';
+import {Select, SelectItem} from '@carbon/react';
 import {C3Navigation} from '@camunda/camunda-composite-components';
 import {Locations, Paths} from 'modules/Routes';
 import {tracking} from 'modules/tracking';
@@ -19,12 +20,13 @@ import {licenseTagStore} from 'modules/stores/licenseTag';
 import {currentTheme} from 'modules/stores/currentTheme';
 import {useCurrentUser} from 'modules/queries/useCurrentUser';
 import {isForbidden} from 'modules/auth/isForbidden';
+import {languageItems, useLocalization} from 'modules/i18n';
 
-function getInfoSidebarItems(isPaidPlan: boolean) {
+function getInfoSidebarItems(isPaidPlan: boolean, t: (key: string) => string) {
   const BASE_INFO_SIDEBAR_ITEMS = [
     {
       key: 'docs',
-      label: 'Documentation',
+      label: t('header.info.documentation'),
       onClick: () => {
         tracking.track({
           eventName: 'info-bar',
@@ -36,7 +38,7 @@ function getInfoSidebarItems(isPaidPlan: boolean) {
     },
     {
       key: 'academy',
-      label: 'Camunda Academy',
+      label: t('header.info.academy'),
       onClick: () => {
         tracking.track({
           eventName: 'info-bar',
@@ -49,7 +51,7 @@ function getInfoSidebarItems(isPaidPlan: boolean) {
   ];
   const FEEDBACK_AND_SUPPORT_ITEM = {
     key: 'feedbackAndSupport',
-    label: 'Feedback and Support',
+    label: t('header.info.feedbackSupport'),
     onClick: () => {
       tracking.track({
         eventName: 'info-bar',
@@ -61,7 +63,7 @@ function getInfoSidebarItems(isPaidPlan: boolean) {
   } as const;
   const COMMUNITY_FORUM_ITEM = {
     key: 'communityForum',
-    label: 'Community Forum',
+    label: t('header.info.community'),
     onClick: () => {
       tracking.track({
         eventName: 'info-bar',
@@ -81,7 +83,32 @@ function getInfoSidebarItems(isPaidPlan: boolean) {
     : [...BASE_INFO_SIDEBAR_ITEMS, COMMUNITY_FORUM_ITEM];
 }
 
+type LanguageSelectorProps = {
+  label: string;
+  currentLanguage: string;
+  onChangeLanguage: (language: string) => void;
+};
+
+const LanguageSelector: React.FC<LanguageSelectorProps> = ({
+  label,
+  currentLanguage,
+  onChangeLanguage,
+}) => (
+  <Select
+    id="operate-language-selector"
+    size="sm"
+    labelText={label}
+    value={currentLanguage}
+    onChange={(event) => onChangeLanguage(event.target.value)}
+  >
+    {languageItems.map(({id, label: languageLabel}) => (
+      <SelectItem key={id} text={languageLabel} value={id} />
+    ))}
+  </Select>
+);
+
 const AppHeader: React.FC = observer(() => {
+  const {t, language, changeLanguage} = useLocalization();
   const {data: currentUser} = useCurrentUser();
   const IS_SAAS = typeof window.clientConfig?.organizationId === 'string';
   const {currentPage} = useCurrentPage();
@@ -109,7 +136,7 @@ const AppHeader: React.FC = observer(() => {
       toggleAppbar={(isAppBarOpen) => setIsAppBarOpen(isAppBarOpen)}
       notificationSideBar={IS_SAAS ? {} : undefined}
       appBar={{
-        ariaLabel: 'App panel',
+        ariaLabel: t('header.aria.appPanel'),
         isOpen: isAppBarOpen,
         elementClicked: (app: string) => {
           tracking.track({
@@ -122,7 +149,7 @@ const AppHeader: React.FC = observer(() => {
       }}
       app={{
         ariaLabel: 'Camunda Operate',
-        name: 'Operate',
+        name: t('header.app.name'),
         routeProps: {
           to: Paths.dashboard(),
           onClick: () => {
@@ -140,7 +167,7 @@ const AppHeader: React.FC = observer(() => {
           : [
               {
                 key: 'dashboard',
-                label: 'Dashboard',
+                label: t('header.nav.dashboard'),
                 isCurrentPage: currentPage === 'dashboard',
                 routeProps: {
                   to: Paths.dashboard(),
@@ -155,7 +182,7 @@ const AppHeader: React.FC = observer(() => {
               },
               {
                 key: 'processes',
-                label: 'Processes',
+                label: t('header.nav.processes'),
                 isCurrentPage: currentPage === 'processes',
                 routeProps: {
                   to: Locations.processes(),
@@ -171,7 +198,7 @@ const AppHeader: React.FC = observer(() => {
               },
               {
                 key: 'decisions',
-                label: 'Decisions',
+                label: t('header.nav.decisions'),
                 isCurrentPage: currentPage === 'decisions',
                 routeProps: {
                   to: Locations.decisions(),
@@ -195,18 +222,26 @@ const AppHeader: React.FC = observer(() => {
       }}
       infoSideBar={{
         isOpen: false,
-        ariaLabel: 'Info',
+        ariaLabel: t('header.info.aria'),
         elements: getInfoSidebarItems(
           typeof currentUser?.salesPlanType === 'string' &&
             ['paid-cc', 'enterprise'].includes(currentUser.salesPlanType),
+          t,
         ),
       }}
       userSideBar={{
-        ariaLabel: 'Settings',
+        ariaLabel: t('header.user.settingsAria'),
         version: import.meta.env.VITE_VERSION,
         customElements: {
+          customSection: (
+            <LanguageSelector
+              label={t('header.language.label')}
+              currentLanguage={language}
+              onChangeLanguage={changeLanguage}
+            />
+          ),
           profile: {
-            label: 'Profile',
+            label: t('header.user.profile'),
             user: {
               name: currentUser?.displayName ?? '',
               email: currentUser?.email ?? '',
@@ -225,7 +260,7 @@ const AppHeader: React.FC = observer(() => {
             : [
                 {
                   key: 'cookie',
-                  label: 'Cookie preferences',
+                  label: t('header.user.cookiePreferences'),
                   onClick: () => {
                     tracking.track({
                       eventName: 'user-side-bar',
@@ -240,7 +275,7 @@ const AppHeader: React.FC = observer(() => {
               ]),
           {
             key: 'terms',
-            label: 'Terms of use',
+            label: t('header.user.terms'),
             onClick: () => {
               tracking.track({
                 eventName: 'user-side-bar',
@@ -255,7 +290,7 @@ const AppHeader: React.FC = observer(() => {
           },
           {
             key: 'privacy',
-            label: 'Privacy policy',
+            label: t('header.user.privacy'),
             onClick: () => {
               tracking.track({
                 eventName: 'user-side-bar',
@@ -267,7 +302,7 @@ const AppHeader: React.FC = observer(() => {
           },
           {
             key: 'imprint',
-            label: 'Imprint',
+            label: t('header.user.imprint'),
             onClick: () => {
               tracking.track({
                 eventName: 'user-side-bar',
@@ -282,7 +317,7 @@ const AppHeader: React.FC = observer(() => {
           ? [
               {
                 key: 'logout',
-                label: 'Log out',
+                label: t('header.user.logout'),
                 renderIcon: ArrowRight,
                 kind: 'ghost',
                 onClick: authenticationStore.handleLogout,
