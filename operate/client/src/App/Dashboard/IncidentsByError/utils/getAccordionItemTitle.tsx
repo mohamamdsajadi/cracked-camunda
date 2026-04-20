@@ -7,6 +7,7 @@
  */
 
 import pluralSuffix from 'modules/utils/pluralSuffix';
+import {translate} from 'modules/i18n';
 
 function getAccordionItemTitle({
   processName,
@@ -21,10 +22,10 @@ function getAccordionItemTitle({
   errorMessage: string;
   tenant?: string;
 }) {
-  return `View ${pluralSuffix(
+  return `${translate('View')} ${pluralSuffix(
     instancesCount,
-    'Instance',
-  )} with error ${errorMessage} in version ${versionName} of Process ${processName}${
+    translate('Instance'),
+  )} ${translate('with error')} ${errorMessage} ${translate('in version')} ${versionName} ${translate('of Process')} ${processName}${
     tenant ? ` – ${tenant}` : ''
   }`;
 }

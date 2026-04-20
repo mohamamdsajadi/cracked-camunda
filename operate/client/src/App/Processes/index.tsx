@@ -15,8 +15,10 @@ import {useEffect} from 'react';
 import {useCallbackPrompt} from 'modules/hooks/useCallbackPrompt';
 import {Modal} from '@carbon/react';
 import {IS_PROCESSES_PAGE_V2} from 'modules/feature-flags';
+import {useLocalization} from 'modules/i18n';
 
 const Processes: React.FC = observer(() => {
+  const {t} = useLocalization();
   useEffect(() => {
     return processInstanceMigrationStore.reset;
   }, []);
@@ -39,17 +41,17 @@ const Processes: React.FC = observer(() => {
       {processInstanceMigrationStore.isEnabled && isNavigationInterrupted && (
         <Modal
           open={isNavigationInterrupted}
-          modalHeading="Leave Migration Mode"
+          modalHeading={t('Leave Migration Mode')}
           preventCloseOnClickOutside
           onRequestClose={cancelNavigation}
-          secondaryButtonText="Stay"
-          primaryButtonText="Leave"
+          secondaryButtonText={t('Stay')}
+          primaryButtonText={t('Leave')}
           onRequestSubmit={() => {
             processInstanceMigrationStore.disable();
             confirmNavigation();
           }}
         >
-          <p>By leaving this page, all planned mapping/s will be discarded.</p>
+          <p>{t('By leaving this page, all planned mapping/s will be discarded.')}</p>
         </Modal>
       )}
     </>

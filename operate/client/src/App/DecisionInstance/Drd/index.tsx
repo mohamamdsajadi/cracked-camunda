@@ -22,6 +22,7 @@ import {useDecisionDefinitionXmlOptions} from 'modules/queries/decisionDefinitio
 import {useDrdData} from 'modules/queries/decisionInstances/useDrdData';
 import {useDrdStateOverlay} from 'modules/queries/decisionInstances/useDrdStateOverlay';
 import type {DrdPanelState} from 'modules/queries/decisionInstances/useDrdPanelState';
+import {useLocalization} from 'modules/i18n';
 
 type DrdProps = {
   decisionEvaluationInstanceKey: string;
@@ -32,6 +33,7 @@ type DrdProps = {
 };
 
 const Drd: React.FC<DrdProps> = observer((props) => {
+  const {t} = useLocalization();
   const drdViewer = useRef<DrdViewer | null>(null);
   const drdViewerRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
@@ -87,8 +89,8 @@ const Drd: React.FC<DrdProps> = observer((props) => {
               hasIconOnly
               renderIcon={Maximize}
               tooltipPosition="left"
-              iconDescription="Maximize DRD Panel"
-              aria-label="Maximize DRD Panel"
+              iconDescription={t('Maximize DRD Panel')}
+              aria-label={t('Maximize DRD Panel')}
               size="lg"
               onClick={() => {
                 props.onChangeDrdPanelState('maximized');
@@ -105,8 +107,8 @@ const Drd: React.FC<DrdProps> = observer((props) => {
               hasIconOnly
               renderIcon={Minimize}
               tooltipPosition="left"
-              iconDescription="Minimize DRD Panel"
-              aria-label="Minimize DRD Panel"
+              iconDescription={t('Minimize DRD Panel')}
+              aria-label={t('Minimize DRD Panel')}
               size="lg"
               onClick={() => {
                 props.onChangeDrdPanelState('minimized');
@@ -122,8 +124,8 @@ const Drd: React.FC<DrdProps> = observer((props) => {
             hasIconOnly
             renderIcon={Close}
             tooltipPosition="left"
-            iconDescription="Close DRD Panel"
-            aria-label="Close DRD Panel"
+            iconDescription={t('Close DRD Panel')}
+            aria-label={t('Close DRD Panel')}
             size="lg"
             onClick={() => {
               props.onChangeDrdPanelState('closed');

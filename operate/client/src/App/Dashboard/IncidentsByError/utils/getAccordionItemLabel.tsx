@@ -6,6 +6,8 @@
  * except in compliance with the Camunda License 1.0.
  */
 
+import {translate} from 'modules/i18n';
+
 function getAccordionItemLabel({
   name,
   version,
@@ -15,7 +17,7 @@ function getAccordionItemLabel({
   version: number;
   tenant?: string;
 }) {
-  return `${name} – Version ${version}${tenant ? ` – ${tenant}` : ''}`;
+  return `${name} – ${translate('Version')} ${version}${tenant ? ` – ${tenant}` : ''}`;
 }
 
 export {getAccordionItemLabel};

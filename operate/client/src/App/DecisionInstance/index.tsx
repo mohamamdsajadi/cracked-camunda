@@ -21,8 +21,10 @@ import {DecisionInstanceContainer} from './styled';
 import {Drd} from './Drd';
 import {useDecisionInstance} from 'modules/queries/decisionInstances/useDecisionInstance';
 import {useDrdPanelState} from 'modules/queries/decisionInstances/useDrdPanelState';
+import {useLocalization} from 'modules/i18n';
 
 const DecisionInstance: React.FC = () => {
+  const {t} = useLocalization();
   const {decisionInstanceId = ''} = useParams<{decisionInstanceId: string}>();
   const [drdPanelState, setDrdPanelState] = useDrdPanelState();
   const {data, error, isFetchedAfterMount} =
@@ -67,7 +69,7 @@ const DecisionInstance: React.FC = () => {
 
   return (
     <>
-      <VisuallyHiddenH1>Operate Decision Instance</VisuallyHiddenH1>
+      <VisuallyHiddenH1>{t('Operate Decision Instance')}</VisuallyHiddenH1>
       <DecisionInstanceContainer>
         <InstanceDetail
           header={

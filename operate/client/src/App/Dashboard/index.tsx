@@ -16,8 +16,10 @@ import {observer} from 'mobx-react';
 import {useLocation} from 'react-router-dom';
 import {InstancesByProcess} from './InstancesByProcess';
 import {IncidentsByError} from './IncidentsByError';
+import {useLocalization} from 'modules/i18n';
 
 const Dashboard = observer(() => {
+  const {t} = useLocalization();
   const location = useLocation();
   const {hasNoInstances} = processInstancesByNameStore;
 
@@ -36,12 +38,12 @@ const Dashboard = observer(() => {
 
   return (
     <Grid $numberOfColumns={hasNoInstances ? 1 : 2}>
-      <VisuallyHiddenH1>Operate Dashboard</VisuallyHiddenH1>
+      <VisuallyHiddenH1>{t('Operate Dashboard')}</VisuallyHiddenH1>
       <Tile data-testid="metric-panel">
         <MetricPanel />
       </Tile>
       <Tile>
-        <TileTitle>Process Instances by Name</TileTitle>
+        <TileTitle>{t('Process Instances by Name')}</TileTitle>
         <ScrollableContent>
           <InstancesByProcess />
         </ScrollableContent>
@@ -49,7 +51,7 @@ const Dashboard = observer(() => {
 
       {!hasNoInstances && (
         <Tile>
-          <TileTitle>Process Incidents by Error Message</TileTitle>
+          <TileTitle>{t('Process Incidents by Error Message')}</TileTitle>
           <ScrollableContent>
             <IncidentsByError />
           </ScrollableContent>

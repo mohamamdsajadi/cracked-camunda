@@ -30,6 +30,7 @@ import {currentTheme} from 'modules/stores/currentTheme';
 import {ThemeSwitcher} from 'modules/components/ThemeSwitcher';
 import {ForbiddenPage} from 'modules/components/ForbiddenPage';
 import {ReactQueryProvider} from 'modules/react-query/ReactQueryProvider';
+import {LocalizationProvider} from 'modules/i18n';
 
 const Wrapper: React.FC = () => {
   return (
@@ -120,14 +121,16 @@ const App: React.FC = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ForbiddenPage}>
-      <ThemeProvider>
-        <ReactQueryProvider>
-          <ThemeSwitcher />
-          <Notifications />
-          <NetworkStatusWatcher />
-          <RouterProvider router={router} />
-        </ReactQueryProvider>
-      </ThemeProvider>
+      <LocalizationProvider>
+        <ThemeProvider>
+          <ReactQueryProvider>
+            <ThemeSwitcher />
+            <Notifications />
+            <NetworkStatusWatcher />
+            <RouterProvider router={router} />
+          </ReactQueryProvider>
+        </ThemeProvider>
+      </LocalizationProvider>
     </ErrorBoundary>
   );
 };

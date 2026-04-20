@@ -37,6 +37,7 @@ import {
 import {TenantField} from 'modules/components/TenantField';
 import {processesStore} from 'modules/stores/processes/processes.list';
 import {batchModificationStore} from 'modules/stores/batchModification';
+import {useLocalization} from 'modules/i18n';
 
 const initialValues: ProcessInstanceFilters = {
   active: true,
@@ -44,6 +45,7 @@ const initialValues: ProcessInstanceFilters = {
 };
 
 const Filters: React.FC = observer(() => {
+  const {t} = useLocalization();
   const filters = useFilters();
   const [visibleFilters, setVisibleFilters] = useState<OptionalFilter[]>([]);
   const filtersFromUrl = filters.getFilters();
@@ -106,7 +108,7 @@ const Filters: React.FC = observer(() => {
               <Stack gap={5}>
                 {window.clientConfig?.multiTenancyEnabled && (
                   <div>
-                    <Title>Tenant</Title>
+                    <Title>{t('Tenant')}</Title>
                     <TenantField
                       onChange={(selectedItem) => {
                         form.change('process', undefined);
@@ -118,7 +120,7 @@ const Filters: React.FC = observer(() => {
                   </div>
                 )}
                 <div>
-                  <Title>Process</Title>
+                  <Title>{t('Process')}</Title>
                   <Stack gap={5}>
                     <ProcessField />
                     <ProcessVersionField />
@@ -126,35 +128,35 @@ const Filters: React.FC = observer(() => {
                   </Stack>
                 </div>
                 <div>
-                  <Title>Instances States</Title>
+                  <Title>{t('Instances States')}</Title>
                   <Stack gap={3}>
                     <CheckboxGroup
-                      groupLabel="Running Instances"
+                      groupLabel={t('Running Instances')}
                       dataTestId="filter-running-instances"
                       items={[
                         {
-                          label: 'Active',
+                          label: t('Active'),
                           name: 'active',
                           Icon: RadioButtonChecked,
                         },
                         {
-                          label: 'Incidents',
+                          label: t('Incidents'),
                           name: 'incidents',
                           Icon: WarningFilled,
                         },
                       ]}
                     />
                     <CheckboxGroup
-                      groupLabel="Finished Instances"
+                      groupLabel={t('Finished Instances')}
                       dataTestId="filter-finished-instances"
                       items={[
                         {
-                          label: 'Completed',
+                          label: t('Completed'),
                           name: 'completed',
                           Icon: CheckmarkOutline,
                         },
                         {
-                          label: 'Canceled',
+                          label: t('Canceled'),
                           name: 'canceled',
                           Icon: Error,
                         },
