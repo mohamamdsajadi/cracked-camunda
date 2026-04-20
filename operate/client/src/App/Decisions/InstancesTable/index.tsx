@@ -21,10 +21,12 @@ import {tracking} from 'modules/tracking';
 import {Link} from 'modules/components/Link';
 import {useFilters} from 'modules/hooks/useFilters';
 import {getDecisionInstanceFilters} from 'modules/utils/filter';
+import {useLocalization} from 'modules/i18n';
 
 const ROW_HEIGHT = 34;
 
 const InstancesTable: React.FC = observer(() => {
+  const {t} = useLocalization();
   const {
     state: {
       status,
@@ -86,10 +88,10 @@ const InstancesTable: React.FC = observer(() => {
 
   const getEmptyListMessage = () => {
     return {
-      message: 'There are no Instances matching this filter set',
+      message: t('There are no Instances matching this filter set'),
       additionalInfo: filters.areDecisionInstanceStatesApplied()
         ? undefined
-        : 'To see some results, select at least one Instance state',
+        : t('To see some results, select at least one Instance state'),
     };
   };
 
@@ -102,7 +104,7 @@ const InstancesTable: React.FC = observer(() => {
   return (
     <Container>
       <PanelHeader
-        title="Decision Instances"
+        title={t('Decision Instances')}
         count={filteredDecisionInstancesCount}
       />
       <SortableTable
@@ -157,8 +159,8 @@ const InstancesTable: React.FC = observer(() => {
                       link: 'decision-instances-parent-process-details',
                     });
                   }}
-                  title={`View decision instance ${id}`}
-                  aria-label={`View decision instance ${id}`}
+                  title={`${t('View decision instance')} ${id}`}
+                  aria-label={`${t('View decision instance')} ${id}`}
                 >
                   {id}
                 </Link>
@@ -171,8 +173,8 @@ const InstancesTable: React.FC = observer(() => {
                   {processInstanceId !== null ? (
                     <Link
                       to={Paths.processInstance(processInstanceId)}
-                      title={`View process instance ${processInstanceId}`}
-                      aria-label={`View process instance ${processInstanceId}`}
+                      title={`${t('View process instance')} ${processInstanceId}`}
+                      aria-label={`${t('View process instance')} ${processInstanceId}`}
                       onClick={() => {
                         tracking.track({
                           eventName: 'navigation',
@@ -183,7 +185,7 @@ const InstancesTable: React.FC = observer(() => {
                       {processInstanceId}
                     </Link>
                   ) : (
-                    'None'
+                    t('None')
                   )}
                 </>
               ),
@@ -192,33 +194,33 @@ const InstancesTable: React.FC = observer(() => {
         )}
         headerColumns={[
           {
-            header: 'Name',
+            header: t('Name'),
             key: 'decisionName',
           },
           {
-            header: 'Decision Instance Key',
+            header: t('Decision Instance Key'),
             key: 'decisionInstanceKey',
             sortKey: 'id',
           },
           {
-            header: 'Version',
+            header: t('Version'),
             key: 'decisionVersion',
           },
           ...(isTenantColumnVisible
             ? [
                 {
-                  header: 'Tenant',
+                  header: t('Tenant'),
                   key: 'tenant',
                 },
               ]
             : []),
           {
-            header: 'Evaluation Date',
+            header: t('Evaluation Date'),
             key: 'evaluationDate',
             isDefault: true,
           },
           {
-            header: 'Process Instance Key',
+            header: t('Process Instance Key'),
             key: 'processInstanceId',
           },
         ]}

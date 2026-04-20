@@ -16,8 +16,10 @@ import {tracking} from 'modules/tracking';
 import {useLocation} from 'react-router-dom';
 import {InstancesBar} from 'modules/components/InstancesBar';
 import {SkeletonText} from '@carbon/react';
+import {useLocalization} from 'modules/i18n';
 
 const MetricPanel = observer(() => {
+  const {t} = useLocalization();
   const location = useLocation();
 
   const {running, active, withIncidents, status} = statisticsStore.state;
@@ -35,7 +37,7 @@ const MetricPanel = observer(() => {
   }, [location.key]);
 
   if (status === 'error') {
-    return <ErrorMessage message="Process statistics could not be fetched" />;
+    return <ErrorMessage message={t('Process statistics could not be fetched')} />;
   }
   return (
     <>
@@ -64,7 +66,7 @@ const MetricPanel = observer(() => {
       >
         {`${
           status === 'fetched' ? `${running} ` : ''
-        }Running Process Instances in total`}
+        }${t('Running Process Instances in total')}`}
       </Title>
       {status === 'fetched' && (
         <InstancesBar
@@ -91,7 +93,7 @@ const MetricPanel = observer(() => {
             incidents: true,
           })}
         >
-          Process Instances with Incident
+          {t('Process Instances with Incident')}
         </Label>
         <Label
           data-testid="active-instances-link"
@@ -106,7 +108,7 @@ const MetricPanel = observer(() => {
             active: true,
           })}
         >
-          Active Process Instances
+          {t('Active Process Instances')}
         </Label>
       </LabelContainer>
     </>

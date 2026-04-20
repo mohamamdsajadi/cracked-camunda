@@ -23,6 +23,8 @@ import {DrdPanel} from './DrdPanel';
 import {drdStore} from 'modules/stores/drd';
 import {DecisionInstanceContainer} from './styled';
 import {Drd} from './Drd';
+import {useLocalization} from 'modules/i18n';
+const {t} = useLocalization();
 
 const DecisionInstance: React.FC = observer(() => {
   const {decisionInstanceId = ''} = useParams<{decisionInstanceId: string}>();
@@ -72,7 +74,7 @@ const DecisionInstance: React.FC = observer(() => {
 
   return (
     <>
-      <VisuallyHiddenH1>Operate Decision Instance</VisuallyHiddenH1>
+      <VisuallyHiddenH1>{t('Operate Decision Instance')}</VisuallyHiddenH1>
       <DecisionInstanceContainer>
         <InstanceDetail
           header={<Header />}

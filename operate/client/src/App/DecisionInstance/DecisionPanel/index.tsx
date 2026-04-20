@@ -14,6 +14,7 @@ import {decisionInstanceDetailsStore} from 'modules/stores/decisionInstanceDetai
 import {useDecisionDefinitionXmlOptions} from 'modules/queries/decisionDefinitions/useDecisionDefinitionXml';
 import {useQuery} from '@tanstack/react-query';
 import {HTTP_STATUS_FORBIDDEN} from 'modules/constants/statusCode';
+import {useLocalization} from 'modules/i18n';
 
 const DecisionPanel: React.FC = observer(() => {
   const {decisionInstance} = decisionInstanceDetailsStore.state;
@@ -49,11 +50,11 @@ const DecisionPanel: React.FC = observer(() => {
     }
     return 'content';
   };
-
+  const {t} = useLocalization();
   return (
     <Section
       data-testid="decision-panel"
-      aria-label="decision panel"
+      aria-label={t('decision panel')}
       tabIndex={0}
     >
       {decisionInstance?.state === 'FAILED' && (

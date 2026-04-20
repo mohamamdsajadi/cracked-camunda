@@ -16,8 +16,10 @@ const maxWidthRatio = 3 / 5;
 type Props = {
   children: React.ReactNode;
 };
+import {useLocalization} from 'modules/i18n';
 
 const DrdPanel: React.FC<Props> = ({children}) => {
+  const {t} = useLocalization();
   const handleRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const startDimensions = useRef<{x?: number; width?: number}>({
@@ -88,7 +90,11 @@ const DrdPanel: React.FC<Props> = ({children}) => {
 
   return (
     <Container>
-      <Panel data-testid="drd-panel" aria-label="drd panel" ref={containerRef}>
+      <Panel
+        data-testid="drd-panel"
+        aria-label={t('drd panel')}
+        ref={containerRef}
+      >
         {children}
       </Panel>
       <Handle ref={handleRef} />

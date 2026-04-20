@@ -11,11 +11,14 @@ import {decisionInstanceDetailsStore} from 'modules/stores/decisionInstanceDetai
 import {TabView} from 'modules/components/TabView';
 import {InputsAndOutputs} from './InputsAndOutputs';
 import {Result} from './Result';
+import {useLocalization} from 'modules/i18n';
 
 const VariablesPanel: React.FC = observer(() => {
   const isLiteralExpression =
     decisionInstanceDetailsStore.state.decisionInstance?.decisionType ===
     'LITERAL_EXPRESSION';
+  const {t} = useLocalization();
+
 
   return (
     <TabView
@@ -26,14 +29,14 @@ const VariablesPanel: React.FC = observer(() => {
           : [
               {
                 id: 'inputs-and-outputs',
-                label: 'Inputs and Outputs',
+                label: t('Inputs and Outputs'),
                 content: <InputsAndOutputs />,
                 removePadding: true,
               },
             ]),
         {
           id: 'result',
-          label: 'Result',
+          label: t('Result'),
           content: <Result />,
           removePadding: true,
         },

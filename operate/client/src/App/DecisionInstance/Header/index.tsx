@@ -18,35 +18,38 @@ import {Link} from 'modules/components/Link';
 import {Locations, Paths} from 'modules/Routes';
 import {formatDate} from 'modules/utils/date';
 import {useAvailableTenants} from 'modules/queries/useAvailableTenants';
+import {useLocalization} from 'modules/i18n';
+const {t} = useLocalization();
+
 
 const getHeaderColumns = (isMultiTenancyEnabled: boolean = false) => {
   return [
     {
-      name: 'Decision Name',
+      name: t('Decision Name'),
       skeletonWidth: '136px',
     },
     {
-      name: 'Decision Instance Key',
+      name: t('Decision Instance Key'),
       skeletonWidth: '137px',
     },
     {
-      name: 'Version',
+      name: t('Version'),
       skeletonWidth: '33px',
     },
     ...(isMultiTenancyEnabled
       ? [
           {
-            name: 'Tenant',
+            name: t('Tenant'),
             skeletonWidth: '34px',
           },
         ]
       : []),
     {
-      name: 'Evaluation Date',
+      name: t('Evaluation Date'),
       skeletonWidth: '143px',
     },
     {
-      name: 'Process Instance Key',
+      name: t('Process Instance Key'),
       skeletonWidth: '137px',
     },
   ];
@@ -159,8 +162,8 @@ const Header: React.FC = observer(() => {
           <Button
             size="sm"
             kind="tertiary"
-            title="Open Decision Requirements Diagram"
-            aria-label="Open Decision Requirements Diagram"
+            title={t('Open Decision Requirements Diagram')}
+            aria-label={t('Open Decision Requirements Diagram')}
             onClick={() => {
               drdStore.setPanelState('minimized');
               tracking.track({
@@ -169,7 +172,7 @@ const Header: React.FC = observer(() => {
               });
             }}
           >
-            Open DRD
+            {t('Open DRD')}
           </Button>
         }
       />

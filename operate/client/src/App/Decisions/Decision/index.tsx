@@ -21,8 +21,10 @@ import {DecisionViewer} from 'modules/components/DecisionViewer';
 import {notificationsStore} from 'modules/stores/notifications';
 import {useDecisionDefinitionXmlOptions} from 'modules/queries/decisionDefinitions/useDecisionDefinitionXml';
 import {useQuery} from '@tanstack/react-query';
+import {useLocalization} from 'modules/i18n';
 
 const Decision: React.FC = observer(() => {
+  const {t} = useLocalization();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -43,7 +45,7 @@ const Decision: React.FC = observer(() => {
   const isDecisionSelected = decisionId !== null;
   const isVersionSelected = version !== null && version !== 'all';
   const decisionName =
-    getDecisionName({decisionId, tenantId: tenant}) ?? 'Decision';
+    getDecisionName({decisionId, tenantId: tenant}) ?? t('Decision');
 
   const decisionDefinitionId =
     isDecisionSelected && isVersionSelected
@@ -66,7 +68,7 @@ const Decision: React.FC = observer(() => {
           navigate(deleteSearchParams(location, ['name', 'version']));
           notificationsStore.displayNotification({
             kind: 'error',
-            title: 'Decision could not be found',
+            title: t('Decision could not be found'),
             isDismissable: true,
           });
         }
@@ -166,14 +168,16 @@ const Decision: React.FC = observer(() => {
         emptyMessage={
           version === 'all'
             ? {
-                message: `There is more than one Version selected for Decision "${decisionName}"`,
-                additionalInfo:
+                message: `${t('There is more than one Version selected for Decision')} "${decisionName}"`,
+                additionalInfo: t(
                   'To see a Decision Table or a Literal Expression, select a single Version',
+                ),
               }
             : {
-                message: 'There is no Decision selected',
-                additionalInfo:
+                message: t('There is no Decision selected'),
+                additionalInfo: t(
                   'To see a Decision Table or a Literal Expression, select a Decision in the Filters panel',
+                ),
               }
         }
       >

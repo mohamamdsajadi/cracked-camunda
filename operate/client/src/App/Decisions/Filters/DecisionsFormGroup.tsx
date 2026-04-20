@@ -13,8 +13,10 @@ import {Title} from 'modules/components/FiltersPanel/styled';
 import {ComboBox} from 'modules/components/ComboBox';
 import {Dropdown, Stack} from '@carbon/react';
 import {useAvailableTenants} from 'modules/queries/useAvailableTenants';
+import {useLocalization} from 'modules/i18n';
 
 const DecisionsFormGroup: React.FC = observer(() => {
+  const {t} = useLocalization();
   const {getVersions, getDefaultVersion, decisions} = groupedDecisionsStore;
 
   const form = useForm();
@@ -30,14 +32,14 @@ const DecisionsFormGroup: React.FC = observer(() => {
 
   return (
     <div>
-      <Title>Decision</Title>
+      <Title>{t('Decision')}</Title>
       <Stack gap={5}>
         <Field name="name">
           {({input}) => {
             return (
               <ComboBox
                 id="decisionName"
-                aria-label="Select a Decision"
+                aria-label={t('Select a Decision')}
                 items={decisions.map(({id, label, tenantId}) => ({
                   label:
                     isMultiTenancyEnabled && !isSpecificTenantSelected
@@ -66,9 +68,9 @@ const DecisionsFormGroup: React.FC = observer(() => {
                     }
                   }
                 }}
-                titleText="Name"
+                titleText={t('Name')}
                 value={input.value}
-                placeholder="Search by Decision Name"
+                placeholder={t('Search by Decision Name')}
                 disabled={isMultiTenancyEnabled && selectedTenant === ''}
               />
             );
@@ -77,9 +79,9 @@ const DecisionsFormGroup: React.FC = observer(() => {
         <Field name="version">
           {({input}) => (
             <Dropdown
-              label="Select a Decision Version"
-              aria-label="Select a Decision Version"
-              titleText="Version"
+              label={t('Select a Decision Version')}
+              aria-label={t('Select a Decision Version')}
+              titleText={t('Version')}
               id="decisionVersion"
               onChange={({selectedItem}) => {
                 input.onChange(selectedItem);
@@ -87,7 +89,7 @@ const DecisionsFormGroup: React.FC = observer(() => {
               disabled={versions.length === 0}
               items={items}
               itemToString={(item) =>
-                item === 'all' ? 'All versions' : item.toString()
+                item === 'all' ? t('All versions') : item.toString()
               }
               selectedItem={input.value}
               size="sm"

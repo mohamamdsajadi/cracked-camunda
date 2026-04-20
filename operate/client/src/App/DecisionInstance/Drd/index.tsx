@@ -22,7 +22,8 @@ import {Close, Maximize, Minimize} from '@carbon/react/icons';
 import {StateOverlay} from 'modules/components/StateOverlay';
 import {useQuery} from '@tanstack/react-query';
 import {useDecisionDefinitionXmlOptions} from 'modules/queries/decisionDefinitions/useDecisionDefinitionXml';
-
+import {useLocalization} from 'modules/i18n';
+const {t} = useLocalization();
 const Drd: React.FC<{decisionDefinitionKey?: string}> = observer(
   ({decisionDefinitionKey}) => {
     const {
@@ -80,65 +81,65 @@ const Drd: React.FC<{decisionDefinitionKey?: string}> = observer(
       };
     }, [decisionDefinitionXml]);
 
-    return (
-      <Container data-testid="drd">
-        <PanelHeader title={decisionDefinitionStore.name ?? ''}>
-          <Stack orientation="horizontal">
-            {panelState === 'minimized' && (
-              <Button
-                kind="ghost"
-                hasIconOnly
-                renderIcon={Maximize}
-                tooltipPosition="left"
-                iconDescription="Maximize DRD Panel"
-                aria-label="Maximize DRD Panel"
-                size="lg"
-                onClick={() => {
-                  setPanelState('maximized');
-                  tracking.track({
-                    eventName: 'drd-panel-interaction',
-                    action: 'maximize',
-                  });
-                }}
-              />
-            )}
-            {panelState === 'maximized' && (
-              <Button
-                kind="ghost"
-                hasIconOnly
-                renderIcon={Minimize}
-                tooltipPosition="left"
-                iconDescription="Minimize DRD Panel"
-                aria-label="Minimize DRD Panel"
-                size="lg"
-                onClick={() => {
-                  setPanelState('minimized');
-                  tracking.track({
-                    eventName: 'drd-panel-interaction',
-                    action: 'minimize',
-                  });
-                }}
-              />
-            )}
+  return (
+    <Container data-testid="drd">
+      <PanelHeader title={decisionDefinitionStore.name ?? ''}>
+        <Stack orientation="horizontal">
+          {panelState === 'minimized' && (
             <Button
               kind="ghost"
               hasIconOnly
-              renderIcon={Close}
+              renderIcon={Maximize}
               tooltipPosition="left"
-              iconDescription="Close DRD Panel"
-              aria-label="Close DRD Panel"
+              iconDescription={t('Maximize DRD Panel')}
+              aria-label={t('Maximize DRD Panel')}
               size="lg"
               onClick={() => {
-                setPanelState('closed');
+                setPanelState('maximized');
                 tracking.track({
                   eventName: 'drd-panel-interaction',
-                  action: 'close',
+                  action: 'maximize',
                 });
               }}
             />
-          </Stack>
-        </PanelHeader>
-        <div data-testid="drd-viewer" ref={drdViewerRef} />
+          )}
+          {panelState === 'maximized' && (
+            <Button
+              kind="ghost"
+              hasIconOnly
+              renderIcon={Minimize}
+              tooltipPosition="left"
+              iconDescription={t('Minimize DRD Panel')}
+              aria-label={t('Minimize DRD Panel')}
+              size="lg"
+              onClick={() => {
+                setPanelState('minimized');
+                tracking.track({
+                  eventName: 'drd-panel-interaction',
+                  action: 'minimize',
+                });
+              }}
+            />
+          )}
+          <Button
+            kind="ghost"
+            hasIconOnly
+            renderIcon={Close}
+            tooltipPosition="left"
+            iconDescription={t('Close DRD Panel')}
+            aria-label={t('Close DRD Panel')}
+            size="lg"
+            onClick={() => {
+              setPanelState('closed');
+              tracking.track({
+                eventName: 'drd-panel-interaction',
+                action: 'close',
+              });
+            }}
+          />
+        </Stack>
+      </PanelHeader>
+      <div data-testid="drd-viewer" ref={drdViewerRef} />
 
         {drdDataStore.state.decisionStateOverlays.map(
           ({decisionId, state, container}) => (

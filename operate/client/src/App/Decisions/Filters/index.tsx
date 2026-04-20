@@ -33,6 +33,7 @@ import {Locations} from 'modules/Routes';
 import {FiltersPanel} from 'modules/components/FiltersPanel';
 import {TenantField} from 'modules/components/TenantField';
 import {groupedDecisionsStore} from 'modules/stores/groupedDecisions';
+import {useLocalization} from 'modules/i18n';
 
 const initialValues: DecisionInstanceFilters = {
   evaluated: true,
@@ -44,6 +45,7 @@ type LocationType = Omit<Location, 'state'> & {
 };
 
 const Filters: React.FC = observer(() => {
+  const {t} = useLocalization();
   const location = useLocation() as LocationType;
   const navigate = useNavigate();
   const [visibleFilters, setVisibleFilters] = useState<OptionalFilter[]>([]);
@@ -103,7 +105,7 @@ const Filters: React.FC = observer(() => {
                 <Stack gap={5}>
                   {window.clientConfig?.multiTenancyEnabled && (
                     <div>
-                      <Title>Tenant</Title>
+                      <Title>{t('Tenant')}</Title>
                       <TenantField
                         onChange={(selectedItem) => {
                           form.change('name', undefined);
