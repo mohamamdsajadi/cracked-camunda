@@ -14,12 +14,14 @@ import {useQuery} from '@tanstack/react-query';
 import {HTTP_STATUS_FORBIDDEN} from 'modules/constants/statusCode';
 import {useDecisionInstance} from 'modules/queries/decisionInstances/useDecisionInstance';
 import {useMemo} from 'react';
+import {useLocalization} from 'modules/i18n';
 
 type DecisionPanelProps = {
   decisionEvaluationInstanceKey: string;
 };
 
 const DecisionPanel: React.FC<DecisionPanelProps> = (props) => {
+  const {t} = useLocalization();
   const {data: decisionInstance} = useDecisionInstance(
     props.decisionEvaluationInstanceKey,
   );
@@ -61,7 +63,7 @@ const DecisionPanel: React.FC<DecisionPanelProps> = (props) => {
   return (
     <Section
       data-testid="decision-panel"
-      aria-label="decision panel"
+      aria-label={t('decision panel')}
       tabIndex={0}
     >
       {decisionInstance?.state === 'FAILED' && (

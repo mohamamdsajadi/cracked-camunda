@@ -35,6 +35,7 @@ import {
   FieldContainer,
 } from 'modules/components/FiltersPanel/styled';
 import {Close} from '@carbon/react/icons';
+import {useLocalization} from 'modules/i18n';
 
 type OptionalFilter =
   | 'decisionInstanceIds'
@@ -97,6 +98,7 @@ type Props = {
 
 const OptionalFiltersFormGroup: React.FC<Props> = observer(
   ({visibleFilters, onVisibleFilterChange}) => {
+    const {t} = useLocalization();
     const location = useLocation() as LocationType;
     const form = useForm();
 
@@ -138,7 +140,7 @@ const OptionalFiltersFormGroup: React.FC<Props> = observer(
           visibleFilters={visibleFilters}
           optionalFilters={optionalFilters.map((id) => ({
             id,
-            label: OPTIONAL_FILTER_FIELDS[id].label,
+            label: t(OPTIONAL_FILTER_FIELDS[id].label),
           }))}
           onFilterSelect={(filter) => {
             onVisibleFilterChange(
@@ -164,8 +166,8 @@ const OptionalFiltersFormGroup: React.FC<Props> = observer(
                   onModalClose={() => setIsDateRangeModalOpen(false)}
                   onClick={() => setIsDateRangeModalOpen(true)}
                   filterName={filter}
-                  popoverTitle="Filter decisions by evaluation date"
-                  label={OPTIONAL_FILTER_FIELDS[filter].label}
+                  popoverTitle={t('Filter decisions by evaluation date')}
+                  label={t(OPTIONAL_FILTER_FIELDS[filter].label)}
                   fromDateTimeKey="evaluationDateAfter"
                   toDateTimeKey="evaluationDateBefore"
                 />
@@ -183,8 +185,12 @@ const OptionalFiltersFormGroup: React.FC<Props> = observer(
                           {...input}
                           id={filter}
                           size="sm"
-                          labelText={field.label}
-                          placeholder={field.placeholder}
+                          labelText={t(field.label)}
+                          placeholder={
+                            field.placeholder === undefined
+                              ? undefined
+                              : t(field.placeholder)
+                          }
                           autoFocus
                         />
                       );
@@ -194,8 +200,12 @@ const OptionalFiltersFormGroup: React.FC<Props> = observer(
                         <TextAreaField
                           {...input}
                           id={filter}
-                          labelText={field.label}
-                          placeholder={field.placeholder}
+                          labelText={t(field.label)}
+                          placeholder={
+                            field.placeholder === undefined
+                              ? undefined
+                              : t(field.placeholder)
+                          }
                           rows={field.rows}
                           autoFocus
                         />
@@ -207,7 +217,7 @@ const OptionalFiltersFormGroup: React.FC<Props> = observer(
               <ButtonContainer>
                 <IconButton
                   kind="ghost"
-                  label={`Remove ${OPTIONAL_FILTER_FIELDS[filter].label} Filter`}
+                  label={`${t('Remove')} ${t(OPTIONAL_FILTER_FIELDS[filter].label)} ${t('Filter')}`}
                   align="top-right"
                   size="sm"
                   onClick={() => {

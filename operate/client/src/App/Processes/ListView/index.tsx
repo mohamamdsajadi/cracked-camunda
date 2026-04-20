@@ -27,12 +27,14 @@ import {tracking} from 'modules/tracking';
 import {OperationsPanel} from 'modules/components/OperationsPanel';
 import {batchModificationStore} from 'modules/stores/batchModification';
 import {ProcessDefinitionKeyContext} from './processDefinitionKeyContext';
+import {useLocalization} from 'modules/i18n';
 
 type LocationType = Omit<Location, 'state'> & {
   state: {refreshContent?: boolean};
 };
 
 const ListView: React.FC = observer(() => {
+  const {t} = useLocalization();
   const location = useLocation() as LocationType;
   const navigate = useNavigate();
 
@@ -112,7 +114,7 @@ const ListView: React.FC = observer(() => {
         navigate(deleteSearchParams(location, ['process', 'version']));
         notificationsStore.displayNotification({
           kind: 'error',
-          title: 'Process could not be found',
+          title: t('Process could not be found'),
           isDismissable: true,
         });
       }
@@ -127,7 +129,7 @@ const ListView: React.FC = observer(() => {
 
   return (
     <ProcessDefinitionKeyContext.Provider value={processDefinitionKey}>
-      <VisuallyHiddenH1>Operate Process Instances</VisuallyHiddenH1>
+      <VisuallyHiddenH1>{t('Operate Process Instances')}</VisuallyHiddenH1>
       <InstancesList
         type="process"
         leftPanel={<Filters />}
@@ -136,7 +138,7 @@ const ListView: React.FC = observer(() => {
         rightPanel={<OperationsPanel />}
         frame={{
           isVisible: batchModificationStore.state.isEnabled,
-          headerTitle: 'Batch Modification Mode',
+          headerTitle: t('Batch Modification Mode'),
         }}
       />
     </ProcessDefinitionKeyContext.Provider>

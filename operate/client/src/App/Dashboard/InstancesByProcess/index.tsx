@@ -24,8 +24,10 @@ import {Details} from './Details';
 import {generateProcessKey} from 'modules/utils/generateProcessKey';
 import {useCurrentUser} from 'modules/queries/useCurrentUser';
 import {useAvailableTenants} from 'modules/queries/useAvailableTenants';
+import {useLocalization} from 'modules/i18n';
 
 const InstancesByProcess: React.FC = observer(() => {
+  const {t} = useLocalization();
   const {
     state: {processInstances, status},
     hasNoInstances,
@@ -46,12 +48,16 @@ const InstancesByProcess: React.FC = observer(() => {
     return (
       <EmptyState
         icon={
-          <EmptyStateProcessInstancesByName title="Start by deploying a process" />
+          <EmptyStateProcessInstancesByName
+            title={t('Start by deploying a process')}
+          />
         }
-        heading="Start by deploying a process"
-        description="There are no processes deployed. Deploy and start a process from our Modeler, then come back here to track its progress."
+        heading={t('Start by deploying a process')}
+        description={t(
+          'There are no processes deployed. Deploy and start a process from our Modeler, then come back here to track its progress.',
+        )}
         link={{
-          label: 'Learn more about Operate',
+          label: t('Learn more about Operate'),
           href: 'https://docs.camunda.io/docs/components/operate/operate-introduction/',
           onClick: () =>
             tracking.track({
@@ -62,7 +68,7 @@ const InstancesByProcess: React.FC = observer(() => {
         button={
           modelerLink !== undefined
             ? {
-                label: 'Go to Modeler',
+                label: t('Go to Modeler'),
                 href: modelerLink,
                 onClick: () =>
                   tracking.track({

@@ -23,8 +23,10 @@ import {EmptyState} from 'modules/components/EmptyState';
 import EmptyStateProcessIncidents from 'modules/components/Icon/empty-state-process-incidents.svg?react';
 import {Details} from './Details';
 import {generateErrorMessageId} from './utils/generateErrorMessageId';
+import {useLocalization} from 'modules/i18n';
 
 const IncidentsByError: React.FC = observer(() => {
+  const {t} = useLocalization();
   const location = useLocation();
 
   useEffect(() => {
@@ -47,9 +49,9 @@ const IncidentsByError: React.FC = observer(() => {
   if (status === 'fetched' && incidents.length === 0) {
     return (
       <EmptyState
-        icon={<EmptyStateProcessIncidents title="Your processes are healthy" />}
-        heading="Your processes are healthy"
-        description="There are no incidents on any instances."
+        icon={<EmptyStateProcessIncidents title={t('Your processes are healthy')} />}
+        heading={t('Your processes are healthy')}
+        description={t('There are no incidents on any instances.')}
       />
     );
   }

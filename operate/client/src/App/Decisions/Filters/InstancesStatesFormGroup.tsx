@@ -11,23 +11,25 @@ import {observer} from 'mobx-react';
 import {Title, WarningFilled} from 'modules/components/FiltersPanel/styled';
 import {CheckmarkOutline} from '@carbon/react/icons';
 import {Checkbox} from 'modules/components/Checkbox';
+import {useLocalization} from 'modules/i18n';
 
 const InstancesStatesFormGroup: React.FC = observer(() => {
+  const {t} = useLocalization();
   return (
     <div>
-      <Title>Instances States</Title>
+      <Title>{t('Instances States')}</Title>
       <Field name="evaluated" component="input" type="checkbox">
         {({input}) => (
           <Checkbox
             input={input}
-            labelText="Evaluated"
+            labelText={t('Evaluated')}
             Icon={CheckmarkOutline}
           />
         )}
       </Field>
       <Field name="failed" component="input" type="checkbox">
         {({input}) => (
-          <Checkbox input={input} labelText="Failed" Icon={WarningFilled} />
+          <Checkbox input={input} labelText={t('Failed')} Icon={WarningFilled} />
         )}
       </Field>
     </div>

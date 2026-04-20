@@ -11,6 +11,7 @@ import {TabView} from 'modules/components/TabView';
 import {InputsAndOutputs} from './InputsAndOutputs';
 import {Result} from './Result';
 import type {DecisionInstance} from '@camunda/camunda-api-zod-schemas/8.8';
+import {useLocalization} from 'modules/i18n';
 
 type VariablesPanelProps = {
   decisionEvaluationInstanceKey: DecisionInstance['decisionEvaluationInstanceKey'];
@@ -21,11 +22,12 @@ const VariablesPanel: React.FC<VariablesPanelProps> = ({
   decisionEvaluationInstanceKey,
   decisionDefinitionType,
 }) => {
+  const {t} = useLocalization();
   const tabs = useMemo(() => {
     let tabs: React.ComponentProps<typeof TabView>['tabs'] = [
       {
         id: 'result',
-        label: 'Result',
+        label: t('Result'),
         content: (
           <Result
             decisionEvaluationInstanceKey={decisionEvaluationInstanceKey}
@@ -38,7 +40,7 @@ const VariablesPanel: React.FC<VariablesPanelProps> = ({
     if (decisionDefinitionType !== 'LITERAL_EXPRESSION') {
       tabs.unshift({
         id: 'inputs-and-outputs',
-        label: 'Inputs and Outputs',
+        label: t('Inputs and Outputs'),
         content: (
           <InputsAndOutputs
             decisionEvaluationInstanceKey={decisionEvaluationInstanceKey}
@@ -49,7 +51,7 @@ const VariablesPanel: React.FC<VariablesPanelProps> = ({
     }
 
     return tabs;
-  }, [decisionDefinitionType, decisionEvaluationInstanceKey]);
+  }, [decisionDefinitionType, decisionEvaluationInstanceKey, t]);
 
   return (
     <TabView

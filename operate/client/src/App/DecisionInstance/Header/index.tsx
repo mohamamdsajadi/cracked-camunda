@@ -16,39 +16,7 @@ import {formatDate} from 'modules/utils/date';
 import {useAvailableTenants} from 'modules/queries/useAvailableTenants';
 import {useDecisionInstance} from 'modules/queries/decisionInstances/useDecisionInstance';
 import type {DrdPanelState} from 'modules/queries/decisionInstances/useDrdPanelState';
-
-const getHeaderColumns = (isMultiTenancyEnabled: boolean = false) => {
-  return [
-    {
-      name: 'Decision Name',
-      skeletonWidth: '136px',
-    },
-    {
-      name: 'Decision Instance Key',
-      skeletonWidth: '137px',
-    },
-    {
-      name: 'Version',
-      skeletonWidth: '33px',
-    },
-    ...(isMultiTenancyEnabled
-      ? [
-          {
-            name: 'Tenant',
-            skeletonWidth: '34px',
-          },
-        ]
-      : []),
-    {
-      name: 'Evaluation Date',
-      skeletonWidth: '143px',
-    },
-    {
-      name: 'Process Instance Key',
-      skeletonWidth: '137px',
-    },
-  ];
-};
+import {useLocalization} from 'modules/i18n';
 
 type HeaderProps = {
   decisionEvaluationInstanceKey: string;
@@ -59,8 +27,38 @@ const Header: React.FC<HeaderProps> = ({
   decisionEvaluationInstanceKey,
   onChangeDrdPanelState,
 }) => {
+  const {t} = useLocalization();
   const isMultiTenancyEnabled = window.clientConfig?.multiTenancyEnabled;
-  const headerColumns = getHeaderColumns(isMultiTenancyEnabled);
+  const headerColumns = [
+    {
+      name: t('Decision Name'),
+      skeletonWidth: '136px',
+    },
+    {
+      name: t('Decision Instance Key'),
+      skeletonWidth: '137px',
+    },
+    {
+      name: t('Version'),
+      skeletonWidth: '33px',
+    },
+    ...(isMultiTenancyEnabled
+      ? [
+          {
+            name: t('Tenant'),
+            skeletonWidth: '34px',
+          },
+        ]
+      : []),
+    {
+      name: t('Evaluation Date'),
+      skeletonWidth: '143px',
+    },
+    {
+      name: t('Process Instance Key'),
+      skeletonWidth: '137px',
+    },
+  ];
   const tenantsById = useAvailableTenants();
   const {data: decisionInstance, status} = useDecisionInstance(
     decisionEvaluationInstanceKey,
@@ -134,7 +132,7 @@ const Header: React.FC<HeaderProps> = ({
             content: formatDate(decisionInstance.evaluationDate),
           },
           {
-            title: decisionInstance.processInstanceKey ?? 'None',
+            title: decisionInstance.processInstanceKey ?? t('None'),
             hideOverflowingContent: false,
             content: (
               <>
@@ -143,8 +141,8 @@ const Header: React.FC<HeaderProps> = ({
                     to={Paths.processInstance(
                       decisionInstance.processInstanceKey,
                     )}
-                    title={`View process instance ${decisionInstance.processInstanceKey}`}
-                    aria-label={`View process instance ${decisionInstance.processInstanceKey}`}
+                    title={`${t('View process instance')} ${decisionInstance.processInstanceKey}`}
+                    aria-label={`${t('View process instance')} ${decisionInstance.processInstanceKey}`}
                     onClick={() => {
                       tracking.track({
                         eventName: 'navigation',
@@ -155,7 +153,7 @@ const Header: React.FC<HeaderProps> = ({
                     {decisionInstance.processInstanceKey}
                   </Link>
                 ) : (
-                  'None'
+                  t('None')
                 )}
               </>
             ),
@@ -165,8 +163,8 @@ const Header: React.FC<HeaderProps> = ({
           <Button
             size="sm"
             kind="tertiary"
-            title="Open Decision Requirements Diagram"
-            aria-label="Open Decision Requirements Diagram"
+            title={t('Open Decision Requirements Diagram')}
+            aria-label={t('Open Decision Requirements Diagram')}
             onClick={() => {
               onChangeDrdPanelState('minimized');
               tracking.track({
@@ -175,7 +173,7 @@ const Header: React.FC<HeaderProps> = ({
               });
             }}
           >
-            Open DRD
+            {t('Open DRD')}
           </Button>
         }
       />
