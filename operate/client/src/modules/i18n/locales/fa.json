@@ -1,0 +1,20 @@
+{
+  "header.aria.appPanel": "پنل برنامه‌ها",
+  "header.app.name": "اُپریت",
+  "header.nav.dashboard": "داشبورد",
+  "header.nav.processes": "فرآیندها",
+  "header.nav.decisions": "تصمیم‌ها",
+  "header.info.documentation": "مستندات",
+  "header.info.academy": "آکادمی کاموندا",
+  "header.info.feedbackSupport": "بازخورد و پشتیبانی",
+  "header.info.community": "انجمن کاربران",
+  "header.info.aria": "اطلاعات",
+  "header.user.settingsAria": "تنظیمات",
+  "header.user.profile": "پروفایل",
+  "header.user.cookiePreferences": "تنظیمات کوکی",
+  "header.user.terms": "شرایط استفاده",
+  "header.user.privacy": "سیاست حفظ حریم خصوصی",
+  "header.user.imprint": "اطلاعات حقوقی",
+  "header.user.logout": "خروج",
+  "header.language.label": "زبان"
+}
