@@ -51,6 +51,7 @@ import {
 import {notificationsStore} from 'modules/stores/notifications';
 import {useNavigate} from 'react-router-dom';
 import {Locations} from 'modules/Routes';
+import {useLocalization} from 'modules/i18n';
 
 const startPolling = (processInstance?: ProcessInstanceType) => {
   startPollingFlowNodeInstance(processInstance, {runImmediately: true});
@@ -61,6 +62,7 @@ const stopPolling = () => {
 };
 
 const ProcessInstance: React.FC = observer(() => {
+  const {t} = useLocalization();
   const {data: processInstance, error} = useProcessInstance();
   const {data: processTitle} = useProcessTitle();
   const {processInstanceKey} = processInstance ?? {};
@@ -82,7 +84,7 @@ const ProcessInstance: React.FC = observer(() => {
     if (error?.response?.status === 404 && processInstanceId) {
       notificationsStore.displayNotification({
         kind: 'error',
-        title: `Instance ${processInstanceId} could not be found`,
+        title: `${t('Instance')} ${processInstanceId} ${t('could not be found')}`,
         isDismissable: true,
       });
       navigate(
@@ -182,14 +184,14 @@ const ProcessInstance: React.FC = observer(() => {
       value={processInstance?.processDefinitionKey}
     >
       <VisuallyHiddenH1>
-        {`Operate Process Instance${
-          isModificationModeEnabled ? ' - Modification Mode' : ''
+        {`${t('Operate Process Instance')}${
+          isModificationModeEnabled ? ` - ${t('Modification Mode')}` : ''
         }`}
       </VisuallyHiddenH1>
       <Frame
         frame={{
           isVisible: isModificationModeEnabled,
-          headerTitle: 'Process Instance Modification Mode',
+          headerTitle: t('Process Instance Modification Mode'),
         }}
       >
         {processInstance && (
@@ -236,17 +238,17 @@ const ProcessInstance: React.FC = observer(() => {
                           }}
                           data-testid="discard-all-button"
                         >
-                          Discard All
+                          {t('Discard All')}
                         </Button>
                       )}
                     >
                       {({open, setOpen}) => (
                         <Modal
-                          modalHeading="Discard Modifications"
+                          modalHeading={t('Discard Modifications')}
                           preventCloseOnClickOutside
                           danger
-                          primaryButtonText="Discard"
-                          secondaryButtonText="Cancel"
+                          primaryButtonText={t('Discard')}
+                          secondaryButtonText={t('Cancel')}
                           open={open}
                           onRequestClose={() => setOpen(false)}
                           onRequestSubmit={() => {
@@ -259,10 +261,9 @@ const ProcessInstance: React.FC = observer(() => {
                           }}
                         >
                           <p>
-                            About to discard all added modifications for
-                            instance {processInstanceId}.
+                            {`${t('About to discard all added modifications for instance')} ${processInstanceId}.`}
                           </p>
-                          <p>Click "Discard" to proceed.</p>
+                          <p>{t('Click "Discard" to proceed.')}</p>
                         </Modal>
                       )}
                     </ModalStateManager>
@@ -281,7 +282,7 @@ const ProcessInstance: React.FC = observer(() => {
                           data-testid="apply-modifications-button"
                           disabled={!hasPendingModifications}
                         >
-                          Apply Modifications
+                          {t('Apply Modifications')}
                         </Button>
                       )}
                     >
@@ -303,18 +304,18 @@ const ProcessInstance: React.FC = observer(() => {
       {isNavigationInterrupted && (
         <Modal
           open={isNavigationInterrupted}
-          modalHeading="Leave Modification Mode"
+          modalHeading={t('Leave Modification Mode')}
           preventCloseOnClickOutside
           onRequestClose={cancelNavigation}
-          secondaryButtonText="Stay"
-          primaryButtonText="Leave"
+          secondaryButtonText={t('Stay')}
+          primaryButtonText={t('Leave')}
           onRequestSubmit={() => {
             tracking.track({eventName: 'leave-modification-mode'});
             confirmNavigation();
           }}
         >
           <p>
-            By leaving this page, all planned modification/s will be discarded.
+            {t('By leaving this page, all planned modification/s will be discarded.')}
           </p>
         </Modal>
       )}

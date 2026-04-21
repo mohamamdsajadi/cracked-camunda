@@ -22,58 +22,55 @@ import {useProcessInstanceXml} from 'modules/queries/processDefinitions/useProce
 import {hasCalledProcessInstances} from 'modules/bpmn-js/utils/hasCalledProcessInstances';
 import {type ProcessInstance} from '@camunda/camunda-api-zod-schemas/8.8';
 import {useAvailableTenants} from 'modules/queries/useAvailableTenants';
-
-const headerColumns = [
-  'Process Name',
-  'Process Instance Key',
-  'Version',
-  'Version Tag',
-  'Tenant',
-  'Start Date',
-  'End Date',
-  'Parent Process Instance Key',
-  'Called Process Instances',
-] as const;
-
-const skeletonColumns: {
-  name: (typeof headerColumns)[number];
-  skeletonWidth: string;
-}[] = [
-  {
-    name: 'Process Name',
-    skeletonWidth: '94px',
-  },
-  {
-    name: 'Process Instance Key',
-    skeletonWidth: '136px',
-  },
-  {
-    name: 'Version',
-    skeletonWidth: '34px',
-  },
-  {
-    name: 'Start Date',
-    skeletonWidth: '142px',
-  },
-  {
-    name: 'End Date',
-    skeletonWidth: '142px',
-  },
-  {
-    name: 'Parent Process Instance Key',
-    skeletonWidth: '142px',
-  },
-  {
-    name: 'Called Process Instances',
-    skeletonWidth: '142px',
-  },
-] as const;
+import {useLocalization} from 'modules/i18n';
 
 type Props = {
   processInstance: ProcessInstance;
 };
 
 const ProcessInstanceHeader: React.FC<Props> = ({processInstance}) => {
+  const {t} = useLocalization();
+  const headerColumns = [
+    t('Process Name'),
+    t('Process Instance Key'),
+    t('Version'),
+    t('Version Tag'),
+    t('Tenant'),
+    t('Start Date'),
+    t('End Date'),
+    t('Parent Process Instance Key'),
+    t('Called Process Instances'),
+  ] as const;
+  const skeletonColumns: {name: (typeof headerColumns)[number]; skeletonWidth: string}[] = [
+    {
+      name: t('Process Name'),
+      skeletonWidth: '94px',
+    },
+    {
+      name: t('Process Instance Key'),
+      skeletonWidth: '136px',
+    },
+    {
+      name: t('Version'),
+      skeletonWidth: '34px',
+    },
+    {
+      name: t('Start Date'),
+      skeletonWidth: '142px',
+    },
+    {
+      name: t('End Date'),
+      skeletonWidth: '142px',
+    },
+    {
+      name: t('Parent Process Instance Key'),
+      skeletonWidth: '142px',
+    },
+    {
+      name: t('Called Process Instances'),
+      skeletonWidth: '142px',
+    },
+  ] as const;
   const {
     processInstanceKey,
     processDefinitionVersion,
@@ -113,10 +110,10 @@ const ProcessInstanceHeader: React.FC<Props> = ({processInstance}) => {
       state={processInstanceState}
       hideBottomBorder={hasIncident}
       headerColumns={headerColumns.filter((name) => {
-        if (name === 'Tenant') {
+        if (name === t('Tenant')) {
           return isMultiTenancyEnabled;
         }
-        if (name === 'Version Tag') {
+        if (name === t('Version Tag')) {
           return hasVersionTag;
         }
         return true;
@@ -158,7 +155,7 @@ const ProcessInstanceHeader: React.FC<Props> = ({processInstance}) => {
         ...(hasVersionTag
           ? [
               {
-                title: 'User-defined label identifying a definition.',
+                title: t('User-defined label identifying a definition.'),
                 content: (
                   <VersionTag size="sm" type="outline">
                     {processDefinitionVersionTag}
@@ -186,15 +183,15 @@ const ProcessInstanceHeader: React.FC<Props> = ({processInstance}) => {
           dataTestId: 'end-date',
         },
         {
-          title: parentProcessInstanceKey ?? 'None',
+          title: parentProcessInstanceKey ?? t('None'),
           hideOverflowingContent: false,
           content: (
             <>
               {parentProcessInstanceKey ? (
                 <Link
                   to={Paths.processInstance(parentProcessInstanceKey)}
-                  title={`View parent instance ${parentProcessInstanceKey}`}
-                  aria-label={`View parent instance ${parentProcessInstanceKey}`}
+                  title={`${t('View parent instance')} ${parentProcessInstanceKey}`}
+                  aria-label={`${t('View parent instance')} ${parentProcessInstanceKey}`}
                   onClick={() => {
                     tracking.track({
                       eventName: 'navigation',
@@ -205,7 +202,7 @@ const ProcessInstanceHeader: React.FC<Props> = ({processInstance}) => {
                   {parentProcessInstanceKey}
                 </Link>
               ) : (
-                'None'
+                t('None')
               )}
             </>
           ),
@@ -232,13 +229,13 @@ const ProcessInstanceHeader: React.FC<Props> = ({processInstance}) => {
                       link: 'process-details-called-instances',
                     });
                   }}
-                  title="View all called instances"
-                  aria-label="View all called instances"
+                  title={t('View all called instances')}
+                  aria-label={t('View all called instances')}
                 >
-                  View All
+                  {t('View All')}
                 </Link>
               ) : (
-                'None'
+                t('None')
               )}
             </>
           ),

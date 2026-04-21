@@ -28,12 +28,14 @@ import type {OperationConfig} from 'modules/components/Operations/types';
 import {logger} from 'modules/logger';
 import {useOperations} from 'modules/queries/operations/useOperations';
 import {ACTIVE_OPERATION_STATES} from 'modules/constants';
+import {useLocalization} from 'modules/i18n';
 
 type Props = {
   processInstance: ProcessInstance;
 };
 
 const ProcessInstanceOperations: React.FC<Props> = ({processInstance}) => {
+  const {t} = useLocalization();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [
@@ -68,7 +70,7 @@ const ProcessInstanceOperations: React.FC<Props> = ({processInstance}) => {
     onError: (error) => {
       notificationsStore.displayNotification({
         kind: 'error',
-        title: 'Failed to cancel process instance',
+        title: t('Failed to cancel process instance'),
         subtitle: error.message,
         isDismissable: true,
       });
@@ -106,7 +108,7 @@ const ProcessInstanceOperations: React.FC<Props> = ({processInstance}) => {
 
       notificationsStore.displayNotification({
         kind: 'success',
-        title: 'Instance deleted',
+        title: t('Instance deleted'),
         isDismissable: true,
       });
     }

@@ -17,6 +17,7 @@ import {
   DescriptionData,
 } from './styled';
 import {panelStatesStore} from 'modules/stores/panelStates';
+import {useLocalization} from 'modules/i18n';
 
 type ProcessDetails = {
   bpmnProcessId?: string;
@@ -33,6 +34,7 @@ type DiagramHeaderProps = {
 
 const DiagramHeader: React.FC<DiagramHeaderProps> = observer(
   ({processDetails, processDefinitionId, panelHeaderRef}) => {
+    const {t} = useLocalization();
     const {processName, bpmnProcessId, version, versionTag} = processDetails;
     const hasVersionTag = !isNil(versionTag);
     const hasSelectedProcess = bpmnProcessId !== undefined;
@@ -40,7 +42,7 @@ const DiagramHeader: React.FC<DiagramHeaderProps> = observer(
 
     return (
       <PanelHeader
-        title={!hasSelectedProcess ? 'Process' : undefined}
+        title={!hasSelectedProcess ? t('Process') : undefined}
         ref={panelHeaderRef}
         className={
           panelStatesStore.state.isOperationsCollapsed
@@ -51,14 +53,14 @@ const DiagramHeader: React.FC<DiagramHeaderProps> = observer(
         {hasSelectedProcess && (
           <>
             <Description>
-              <DescriptionTitle>Process name</DescriptionTitle>
+              <DescriptionTitle>{t('Process name')}</DescriptionTitle>
               <DescriptionData title={processName} role="heading">
                 {processName}
               </DescriptionData>
             </Description>
 
             <Description>
-              <DescriptionTitle>Process ID</DescriptionTitle>
+              <DescriptionTitle>{t('Process ID')}</DescriptionTitle>
               <DescriptionData>
                 <CopiableProcessID bpmnProcessId={bpmnProcessId} />
               </DescriptionData>
@@ -66,7 +68,7 @@ const DiagramHeader: React.FC<DiagramHeaderProps> = observer(
 
             {hasVersionTag && (
               <Description>
-                <DescriptionTitle>Version tag</DescriptionTitle>
+                <DescriptionTitle>{t('Version tag')}</DescriptionTitle>
                 <DescriptionData title={versionTag}>
                   {versionTag}
                 </DescriptionData>
