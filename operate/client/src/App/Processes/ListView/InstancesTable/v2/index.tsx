@@ -34,6 +34,8 @@ import {useLocation} from 'react-router-dom';
 import {InstanceOperations} from './InstanceOperations';
 import {BatchModificationFooter} from '../BatchModificationFooter';
 import {getProcessInstancesRequestFilters} from 'modules/utils/filter';
+import {useLocalization} from "modules/i18n";
+const {t} = useLocalization();
 
 const ROW_HEIGHT = 34;
 
@@ -95,7 +97,7 @@ const InstancesTable: React.FC = observer(() => {
   return (
     <Container aria-label="Process Instances Panel">
       <PanelHeader
-        title="Process Instances"
+        title={t("Process Instances")}
         count={filteredProcessInstancesCount}
       />
       <Toolbar
@@ -233,30 +235,30 @@ const InstancesTable: React.FC = observer(() => {
         })}
         headerColumns={[
           {
-            header: 'Name',
+            header: t('Name'),
             key: 'processName',
           },
           ...(isOperationStateColumnVisible
             ? [
                 {
-                  header: 'Operation State',
+                  header: t('Operation State'),
                   key: 'instanceOperationState',
                 },
               ]
             : []),
           {
-            header: 'Process Instance Key',
+            header: t('Process Instance Key'),
             key: 'processInstanceKey',
             sortKey: 'id',
           },
           {
-            header: 'Version',
+            header: t('Version'),
             key: 'processVersion',
           },
           ...(hasVersionTags
             ? [
                 {
-                  header: 'Version Tag',
+                  header: t('Version Tag'),
                   key: 'versionTag',
                   isDisabled: true,
                 },
@@ -265,28 +267,28 @@ const InstancesTable: React.FC = observer(() => {
           ...(isTenantColumnVisible
             ? [
                 {
-                  header: 'Tenant',
+                  header: t('Tenant'),
                   key: 'tenant',
                 },
               ]
             : []),
           {
-            header: 'Start Date',
+            header: t('Start Date'),
             key: 'startDate',
             isDefault: true,
           },
           {
-            header: 'End Date',
+            header: t('End Date'),
             key: 'endDate',
             isDisabled: !listHasFinishedInstances,
           },
           {
-            header: 'Parent Process Instance Key',
+            header: t('Parent Process Instance Key'),
             key: 'parentInstanceId',
           },
 
           {
-            header: 'Operations',
+            header: t('Operations'),
             key: 'operations',
             isDisabled: true,
           },

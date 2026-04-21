@@ -131,32 +131,32 @@ const Filters: React.FC = observer(() => {
                   <Title>{t('Instances States')}</Title>
                   <Stack gap={3}>
                     <CheckboxGroup
-                      groupLabel="Running Instances"
+                      groupLabel={t("Running Instances")}
                       dataTestId="filter-running-instances"
                       items={[
                         {
-                          label: 'Active',
+                          label: t('Active'),
                           name: 'active',
                           Icon: RadioButtonChecked,
                         },
                         {
-                          label: 'Incidents',
+                          label: t('Incidents'),
                           name: 'incidents',
                           Icon: WarningFilled,
                         },
                       ]}
                     />
                     <CheckboxGroup
-                      groupLabel="Finished Instances"
+                      groupLabel={t("Finished Instances")}
                       dataTestId="filter-finished-instances"
                       items={[
                         {
-                          label: 'Completed',
+                          label: t('Completed'),
                           name: 'completed',
                           Icon: CheckmarkOutline,
                         },
                         {
-                          label: 'Canceled',
+                          label: t('Canceled'),
                           name: 'canceled',
                           Icon: Error,
                         },

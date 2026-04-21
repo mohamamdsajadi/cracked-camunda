@@ -34,6 +34,7 @@ import {
 } from 'modules/utils/flowNodes';
 import {useBusinessObjects} from 'modules/queries/processDefinitions/useBusinessObjects';
 import type {FlowNodeState} from 'modules/types/operate';
+import {useLocalization} from "../../../../../modules/i18n";
 
 const OVERLAY_TYPE_BATCH_MODIFICATIONS_BADGE = 'batchModificationsBadge';
 
@@ -145,6 +146,7 @@ const DiagramPanel: React.FC = observer(() => {
     }
     return 'content';
   };
+  const {t} = useLocalization();
 
   return (
     <Section aria-label="Diagram Panel">
@@ -164,9 +166,8 @@ const DiagramPanel: React.FC = observer(() => {
                 additionalInfo: 'To see a Diagram, select a single Version',
               }
             : {
-                message: 'There is no Process selected',
-                additionalInfo:
-                  'To see a Diagram, select a Process in the Filters panel',
+                message: t('There is no Process selected'),
+                additionalInfo: t('To see a Diagram, select a Process in the Filters panel'),
               }
         }
       >

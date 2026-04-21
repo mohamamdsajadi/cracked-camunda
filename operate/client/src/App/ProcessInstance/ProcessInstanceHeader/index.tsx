@@ -22,6 +22,7 @@ import {useProcessInstanceXml} from 'modules/queries/processDefinitions/useProce
 import {hasCalledProcessInstances} from 'modules/bpmn-js/utils/hasCalledProcessInstances';
 import {type ProcessInstance} from '@camunda/camunda-api-zod-schemas/8.8';
 import {useAvailableTenants} from 'modules/queries/useAvailableTenants';
+import {useLocalization} from 'modules/i18n';
 
 const headerColumns = [
   'Process Name',
@@ -34,6 +35,7 @@ const headerColumns = [
   'Parent Process Instance Key',
   'Called Process Instances',
 ] as const;
+
 
 const skeletonColumns: {
   name: (typeof headerColumns)[number];
@@ -107,11 +109,12 @@ const ProcessInstanceHeader: React.FC<Props> = ({processInstance}) => {
   }`;
   const hasVersionTag = !isNil(processDefinitionVersionTag);
   const processInstanceState = hasIncident ? 'INCIDENT' : state;
-
+  const {t} = useLocalization();
   return (
     <InstanceHeader
       state={processInstanceState}
       hideBottomBorder={hasIncident}
+
       headerColumns={headerColumns.filter((name) => {
         if (name === 'Tenant') {
           return isMultiTenancyEnabled;
@@ -120,7 +123,7 @@ const ProcessInstanceHeader: React.FC<Props> = ({processInstance}) => {
           return hasVersionTag;
         }
         return true;
-      })}
+      }).map((name) => t(name))}
       bodyColumns={[
         {
           title: getProcessDefinitionName(processInstance),

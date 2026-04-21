@@ -37,6 +37,9 @@ import {
   FieldContainer,
 } from 'modules/components/FiltersPanel/styled';
 import {Variable} from './VariableField';
+import {useLocalization} from "modules/i18n";
+const {t} = useLocalization();
+
 
 type OptionalFilter =
   | 'variable'
@@ -75,7 +78,7 @@ const OPTIONAL_FILTER_FIELDS: Record<
   },
   ids: {
     keys: ['ids'],
-    label: 'Process Instance Key(s)',
+    label: t('Process Instance Key(s)'),
     type: 'multiline',
     placeholder: 'separated by space or comma',
     rows: 1,
@@ -87,7 +90,7 @@ const OPTIONAL_FILTER_FIELDS: Record<
   },
   operationId: {
     keys: ['operationId'],
-    label: 'Operation Id',
+    label: t('Operation Id'),
     type: 'text',
     validate: mergeValidators(
       validateOperationIdCharacters,
@@ -96,7 +99,7 @@ const OPTIONAL_FILTER_FIELDS: Record<
   },
   parentInstanceId: {
     keys: ['parentInstanceId'],
-    label: 'Parent Process Instance Key',
+    label: t('Parent Process Instance Key'),
     type: 'text',
     validate: mergeValidators(
       validateParentInstanceIdComplete,
@@ -106,7 +109,7 @@ const OPTIONAL_FILTER_FIELDS: Record<
   },
   errorMessage: {
     keys: ['errorMessage'],
-    label: 'Error Message',
+    label: t('Error Message'),
     type: 'text',
   },
   retriesLeft: {

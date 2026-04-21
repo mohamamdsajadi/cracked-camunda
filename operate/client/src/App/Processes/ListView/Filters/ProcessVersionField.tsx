@@ -12,6 +12,7 @@ import {observer} from 'mobx-react';
 import {Dropdown} from '@carbon/react';
 import {processesStore} from 'modules/stores/processes/processes.list';
 import {batchModificationStore} from 'modules/stores/batchModification';
+import {useLocalization} from 'modules/i18n';
 
 const ProcessVersionField: React.FC = observer(() => {
   const {versionsByProcessAndTenant} = processesStore;
@@ -25,14 +26,14 @@ const ProcessVersionField: React.FC = observer(() => {
   const form = useForm();
   const isDisabled =
     batchModificationStore.state.isEnabled || versions.length === 0;
-
+  const {t} = useLocalization();
   return (
     <Field name="version">
       {({input}) => {
         return (
           <Dropdown
-            label="Select a Process Version"
-            aria-label="Select a Process Version"
+            label={t("Select a Process Version")}
+            aria-label={t("Select a Process Version")}
             titleText="Version"
             id="processVersion"
             onChange={({selectedItem}) => {

@@ -93,5 +93,21 @@
   "Maximize DRD Panel": "بزرگ‌کردن پنل DRD",
   "Minimize DRD Panel": "کوچک‌کردن پنل DRD",
   "Close DRD Panel": "بستن پنل DRD",
-  "drd panel": "پنل DRD"
+  "drd panel": "پنل DRD",
+  "Select a Flow Node": "یک گره روند را انتخاب کنید",
+  "Search by Process Flow Node": "جستجو بر اساس گره روند فرآیند",
+  "Select a Process Version": "یک نسخه از فرآیند را انتخاب کنید",
+  "Operation could not be created": "ایجاد عملیات ممکن نیست",
+  "You do not have permission": "انجام عملیات مجاز نیست.",
+  "Affected instances": "نمونه های درگیر",
+  "Search by Process Name": "جستجو بر اساس نام فرآیند",
+  "There is no Process selected": "هیچ فرآیندی انتخاب نشده",
+  "To see a Diagram, select a Process in the Filters panel": "جهت نمایش دایاگرام فرآیند یکی از فرآیند ها را از بخش فیلتر انتخاب کنید",
+  "Process Name": "نام فرایند",
+  "Version Tag": "برچسب نسخه",
+  "Start Date": "تاریخ شروع",
+  "End Date": "تاریخ پایان",
+  "Parent Process Instance Key": "کلید نمونه فرایند والد",
+  "Called Process Instances": "نمونه‌های فرایند فراخوانی‌شده",
+  "Operation State": "وضعیت فرآیند"
 }

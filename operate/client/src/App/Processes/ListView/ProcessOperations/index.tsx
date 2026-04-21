@@ -20,6 +20,7 @@ import {notificationsStore} from 'modules/stores/notifications';
 import {tracking} from 'modules/tracking';
 import {observer} from 'mobx-react';
 import {processInstancesStore} from 'modules/stores/processInstances';
+import {useLocalization} from 'modules/i18n';
 
 type Props = {
   processDefinitionId: string;
@@ -31,6 +32,8 @@ const ProcessOperations: React.FC<Props> = observer(
   ({processDefinitionId, processName, processVersion}) => {
     const [isDeleteModalVisible, setIsDeleteModalVisible] =
       useState<boolean>(false);
+    const {t} = useLocalization();
+
 
     const [isOperationRunning, setIsOperationRunning] = useState(false);
     const {runningInstancesCount} = processInstancesStore.state;
@@ -118,7 +121,7 @@ const ProcessOperations: React.FC<Props> = observer(
                   ],
                 },
               ]}
-              label="Process Details"
+              label={t("Process Details")}
             />
           }
           onClose={() => setIsDeleteModalVisible(false)}

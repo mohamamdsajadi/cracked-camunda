@@ -29,7 +29,7 @@ import {useModifyProcessInstancesBatchOperation} from 'modules/mutations/process
 import {processInstancesStore} from 'modules/stores/processInstances';
 import {processInstancesSelectionStore} from 'modules/stores/processInstancesSelection';
 import {buildProcessInstanceKeyCriterion} from 'modules/mutations/processes/buildProcessInstanceKeyCriterion';
-
+import {useLocalization} from 'modules/i18n';
 const BatchModificationSummaryModal: React.FC<StateProps> = observer(
   ({open, setOpen}) => {
     const location = useLocation();
@@ -71,6 +71,7 @@ const BatchModificationSummaryModal: React.FC<StateProps> = observer(
       processDefinitionKey,
       sourceElementId,
     );
+    const {t} = useLocalization();
 
     const isPrimaryButtonDisabled =
       !sourceElementId || selectedTargetElementId === null;
@@ -93,9 +94,9 @@ const BatchModificationSummaryModal: React.FC<StateProps> = observer(
           });
           notificationsStore.displayNotification({
             kind: 'error',
-            title: 'Operation could not be created',
+            title: t('Operation could not be created'),
             subtitle: message.includes('403')
-              ? 'You do not have permission'
+              ? t('You do not have permission')
               : undefined,
             isDismissable: true,
           });
@@ -103,9 +104,9 @@ const BatchModificationSummaryModal: React.FC<StateProps> = observer(
       });
 
     const headers = [
-      {header: 'Operation', key: 'operation', width: '30%'},
-      {header: 'Flow Node', key: 'flowNode', width: '40%'},
-      {header: 'Affected instances', key: 'affectedInstances', width: '30%'},
+      {header: t('Operation'), key: 'operation', width: '30%'},
+      {header: t('Flow Node'), key: 'flowNode', width: '40%'},
+      {header: t(t('Affected instances')), key: 'affectedInstances', width: '30%'},
     ];
 
     const rows = [

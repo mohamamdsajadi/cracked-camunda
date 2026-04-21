@@ -13,6 +13,7 @@ import {ComboBox} from 'modules/components/ComboBox';
 import {batchModificationStore} from 'modules/stores/batchModification';
 import {useProcessDefinitionKeyContext} from '../processDefinitionKeyContext';
 import {useListViewXml} from 'modules/queries/processDefinitions/useListViewXml';
+import {useLocalization} from 'modules/i18n';
 
 const FlowNodeField: React.FC = observer(() => {
   const processDefinitionKey = useProcessDefinitionKeyContext();
@@ -21,6 +22,7 @@ const FlowNodeField: React.FC = observer(() => {
   });
 
   const isDisabled = batchModificationStore.state.isEnabled && !isFetching;
+  const {t} = useLocalization();
 
   return (
     <Field name="flowNodeId">
@@ -28,13 +30,13 @@ const FlowNodeField: React.FC = observer(() => {
         <ComboBox
           titleText="Flow Node"
           id="flowNodeId"
-          aria-label="Select a Flow Node"
+          aria-label={t("Select a Flow Node")}
           onChange={({selectedItem}) => {
             input.onChange(selectedItem?.id);
           }}
           items={processDefinitionData?.flowNodeFilterOptions ?? []}
           value={input.value}
-          placeholder="Search by Process Flow Node"
+          placeholder={t("Search by Process Flow Node")}
           disabled={isDisabled}
           title={
             batchModificationStore.state.isEnabled

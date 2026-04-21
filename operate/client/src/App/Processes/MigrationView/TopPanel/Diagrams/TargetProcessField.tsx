@@ -13,14 +13,15 @@ import {processesStore} from 'modules/stores/processes/processes.migration';
 import {Stack} from '@carbon/react';
 import {ComboBox} from 'modules/components/ComboBox';
 import {processInstanceMigrationStore} from 'modules/stores/processInstanceMigration';
+import {useLocalization} from 'modules/i18n';
 
 const TargetProcessField: React.FC = observer(() => {
+  const {t} = useLocalization();
   const {
     versionsByProcessAndTenant,
     processes,
     migrationState: {selectedTargetProcess},
   } = processesStore;
-
   return (
     <Stack orientation="horizontal" gap={5}>
       <Label htmlFor="targetProcess">Target</Label>
@@ -28,7 +29,7 @@ const TargetProcessField: React.FC = observer(() => {
         aria-label="Target"
         title="Target"
         id="targetProcess"
-        placeholder="Search by process name"
+        placeholder={t("Search by process name")}
         items={processes.map(({id, label}) => {
           return {
             label,

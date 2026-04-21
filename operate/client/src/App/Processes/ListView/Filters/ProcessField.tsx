@@ -13,8 +13,11 @@ import {processesStore} from 'modules/stores/processes/processes.list';
 import {ComboBox} from 'modules/components/ComboBox';
 import {batchModificationStore} from 'modules/stores/batchModification';
 import {useAvailableTenants} from 'modules/queries/useAvailableTenants';
+import {useLocalization} from 'modules/i18n';
 
 const ProcessField: React.FC = observer(() => {
+
+  const {t} = useLocalization();
   const {processes, versionsByProcessAndTenant} = processesStore;
   const form = useForm();
   const tenantsById = useAvailableTenants();
@@ -33,10 +36,10 @@ const ProcessField: React.FC = observer(() => {
     <Field name="process" data-testid="filter-process-name-field">
       {({input}) => (
         <ComboBox
-          titleText="Name"
+          titleText={t("Name")}
           id="processName"
-          aria-label="Select a Process"
-          placeholder="Search by Process Name"
+          aria-label={t("Select a Process")}
+          placeholder={t("Search by Process Name")}
           onChange={({selectedItem}) => {
             const versions = selectedItem
               ? versionsByProcessAndTenant[selectedItem.id]
