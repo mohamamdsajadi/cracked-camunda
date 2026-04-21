@@ -40,14 +40,14 @@ const Processes: React.FC = observer(() => {
           modalHeading={t('Leave Migration Mode')}
           preventCloseOnClickOutside
           onRequestClose={cancelNavigation}
-          secondaryButtonText={t('Stay')}
-          primaryButtonText={t('Leave')}
+          secondaryButtonText="Stay"
+          primaryButtonText="Leave"
           onRequestSubmit={() => {
             processInstanceMigrationStore.disable();
             confirmNavigation();
           }}
         >
-          <p>{t('By leaving this page, all planned mapping/s will be discarded.')}</p>
+          <p>By leaving this page, all planned mapping/s will be discarded.</p>
         </Modal>
       )}
     </>
