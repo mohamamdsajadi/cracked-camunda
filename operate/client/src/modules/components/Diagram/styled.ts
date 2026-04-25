@@ -8,7 +8,9 @@
 
 import styled from 'styled-components';
 
-const Diagram = styled.div`
+const Diagram = styled.div.attrs({
+  dir: 'ltr',
+})`
   height: 100%;
   width: 100%;
   position: relative;

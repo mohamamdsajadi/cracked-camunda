@@ -37,6 +37,7 @@ Promise.all([
   tracking.loadAnalyticsToWillingUsers(),
   enableMockingForDevEnv(),
 ]).then(() => {
+  document.documentElement.setAttribute('dir', 'rtl');
   const rootElement = document.getElementById('root');
   if (rootElement !== null) {
     const root = createRoot(rootElement);

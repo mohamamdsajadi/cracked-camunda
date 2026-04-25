@@ -35,6 +35,7 @@ const root = createRoot(container!);
 initI18next();
 
 Promise.all([tracking.loadAnalyticsToWillingUsers(), mock()]).finally(() => {
+  document.documentElement.setAttribute('dir', 'rtl');
   root.render(
     <StrictMode>
       <App />

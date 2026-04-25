@@ -64,7 +64,7 @@ const BPMNDiagram: React.FC<Props> = observer(
     }, [viewer]);
 
     return (
-      <div className={styles.container} data-testid="diagram">
+      <div className={styles.container} data-testid="diagram" dir="ltr">
         <div className={styles.canvas} ref={diagramCanvasRef} />
         {isDiagramRendered && (
           <>

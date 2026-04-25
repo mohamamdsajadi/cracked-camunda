@@ -88,6 +88,7 @@ export class BPMNDiagram extends Component<BPMNDiagramProps, BPMNDiagramState> {
     return (
       <div
         className={classnames('BPMNDiagram', {loading: loading, disableNavigation})}
+        dir="ltr"
         style={style}
         ref={this.storeContainer}
       >

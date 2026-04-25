@@ -13,5 +13,7 @@ import 'polyfills';
 
 import App from './App';
 
+document.documentElement.setAttribute('dir', 'rtl');
+
 const root = createRoot(document.getElementById('root'));
 root.render(<App />);
