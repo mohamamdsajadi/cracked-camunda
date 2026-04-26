@@ -16,6 +16,7 @@
 .BPMNDiagram {
   flex-grow: 1;
   position: relative;
+  direction: ltr;
 
   &.loading .bjs-container {
     opacity: 0.5;
