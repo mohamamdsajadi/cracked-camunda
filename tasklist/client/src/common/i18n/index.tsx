@@ -17,6 +17,7 @@ import {
   fr as dateLocaleFr,
   de as dateLocaleDe,
   es as dateLocaleEs,
+  faIR as dateLocaleFaIR,
   type Locale,
 } from 'date-fns/locale';
 
@@ -55,6 +56,11 @@ const localeDefinitions: LocaleDefinitions = {
     language: 'Español',
     dateLocale: dateLocaleEs,
     translationFile: translationsEs,
+  },
+  fa: {
+    language: 'فارسی',
+    dateLocale: dateLocaleFaIR,
+    translationFile: translationsEn,
   },
 };
 

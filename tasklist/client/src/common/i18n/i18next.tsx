@@ -19,6 +19,13 @@ const detection = {
   checkWhitelist: true,
 };
 
+function syncDocumentDirection(language?: string) {
+  if (language !== undefined) {
+    document.documentElement.setAttribute('lang', language);
+  }
+  document.documentElement.setAttribute('dir', i18n.dir(language));
+}
+
 function initI18next() {
   i18n
     .use(LanguageDetector)
@@ -31,6 +38,9 @@ function initI18next() {
         escapeValue: false,
       },
     });
+
+  syncDocumentDirection(i18n.language);
+  i18n.on('languageChanged', syncDocumentDirection);
 }
 
 export {initI18next};
