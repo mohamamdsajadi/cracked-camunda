@@ -11,6 +11,7 @@ import translationsEn from './locales/en.json';
 import translationsFr from './locales/fr.json';
 import translationsDe from './locales/de.json';
 import translationsEs from './locales/es.json';
+import translationsFa from './locales/fa.json';
 
 import {
   enUS as dateLocaleEnUS,
@@ -60,7 +61,7 @@ const localeDefinitions: LocaleDefinitions = {
   fa: {
     language: 'فارسی',
     dateLocale: dateLocaleFaIR,
-    translationFile: translationsEn,
+    translationFile: translationsFa,
   },
 };
 
