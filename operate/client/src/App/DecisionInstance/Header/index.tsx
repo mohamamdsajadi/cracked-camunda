@@ -19,10 +19,11 @@ import {Locations, Paths} from 'modules/Routes';
 import {formatDate} from 'modules/utils/date';
 import {useAvailableTenants} from 'modules/queries/useAvailableTenants';
 import {useLocalization} from 'modules/i18n';
-const {t} = useLocalization();
 
-
-const getHeaderColumns = (isMultiTenancyEnabled: boolean = false) => {
+const getHeaderColumns = (
+  t: (key: string) => string,
+  isMultiTenancyEnabled: boolean = false,
+) => {
   return [
     {
       name: t('Decision Name'),
@@ -56,12 +57,13 @@ const getHeaderColumns = (isMultiTenancyEnabled: boolean = false) => {
 };
 
 const Header: React.FC = observer(() => {
+  const {t} = useLocalization();
   const {
     state: {status, decisionInstance},
   } = decisionInstanceDetailsStore;
   const {decisionInstanceId} = useParams<{decisionInstanceId: string}>();
   const isMultiTenancyEnabled = window.clientConfig?.multiTenancyEnabled;
-  const headerColumns = getHeaderColumns(isMultiTenancyEnabled);
+  const headerColumns = getHeaderColumns(t, isMultiTenancyEnabled);
   const tenantsById = useAvailableTenants();
 
   if (status === 'initial') {

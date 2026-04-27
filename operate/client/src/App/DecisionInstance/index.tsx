@@ -24,9 +24,9 @@ import {drdStore} from 'modules/stores/drd';
 import {DecisionInstanceContainer} from './styled';
 import {Drd} from './Drd';
 import {useLocalization} from 'modules/i18n';
-const {t} = useLocalization();
 
 const DecisionInstance: React.FC = observer(() => {
+  const {t} = useLocalization();
   const {decisionInstanceId = ''} = useParams<{decisionInstanceId: string}>();
   const {decisionInstance} = decisionInstanceDetailsStore.state;
   const decisionName = decisionInstance?.decisionName;
