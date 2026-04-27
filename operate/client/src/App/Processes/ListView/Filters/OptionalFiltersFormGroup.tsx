@@ -37,9 +37,7 @@ import {
   FieldContainer,
 } from 'modules/components/FiltersPanel/styled';
 import {Variable} from './VariableField';
-import {useLocalization} from "modules/i18n";
-const {t} = useLocalization();
-
+import {useLocalization} from 'modules/i18n';
 
 type OptionalFilter =
   | 'variable'
@@ -78,7 +76,7 @@ const OPTIONAL_FILTER_FIELDS: Record<
   },
   ids: {
     keys: ['ids'],
-    label: t('Process Instance Key(s)'),
+    label: 'Process Instance Key(s)',
     type: 'multiline',
     placeholder: 'separated by space or comma',
     rows: 1,
@@ -90,7 +88,7 @@ const OPTIONAL_FILTER_FIELDS: Record<
   },
   operationId: {
     keys: ['operationId'],
-    label: t('Operation Id'),
+    label: 'Operation Id',
     type: 'text',
     validate: mergeValidators(
       validateOperationIdCharacters,
@@ -99,7 +97,7 @@ const OPTIONAL_FILTER_FIELDS: Record<
   },
   parentInstanceId: {
     keys: ['parentInstanceId'],
-    label: t('Parent Process Instance Key'),
+    label: 'Parent Process Instance Key',
     type: 'text',
     validate: mergeValidators(
       validateParentInstanceIdComplete,
@@ -109,7 +107,7 @@ const OPTIONAL_FILTER_FIELDS: Record<
   },
   errorMessage: {
     keys: ['errorMessage'],
-    label: t('Error Message'),
+    label: 'Error Message',
     type: 'text',
   },
   retriesLeft: {
@@ -138,6 +136,7 @@ type Props = {
 
 const OptionalFiltersFormGroup: React.FC<Props> = observer(
   ({visibleFilters, onVisibleFilterChange}) => {
+    const {t} = useLocalization();
     const location = useLocation() as LocationType;
     const form = useForm();
 
@@ -175,7 +174,7 @@ const OptionalFiltersFormGroup: React.FC<Props> = observer(
           visibleFilters={visibleFilters}
           optionalFilters={optionalFilters.map((id) => ({
             id,
-            label: OPTIONAL_FILTER_FIELDS[id].label,
+            label: t(OPTIONAL_FILTER_FIELDS[id].label),
           }))}
           onFilterSelect={(filter) => {
             onVisibleFilterChange(

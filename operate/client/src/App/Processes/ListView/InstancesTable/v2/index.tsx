@@ -34,12 +34,12 @@ import {useLocation} from 'react-router-dom';
 import {InstanceOperations} from './InstanceOperations';
 import {BatchModificationFooter} from '../BatchModificationFooter';
 import {getProcessInstancesRequestFilters} from 'modules/utils/filter';
-import {useLocalization} from "modules/i18n";
-const {t} = useLocalization();
+import {useLocalization} from 'modules/i18n';
 
 const ROW_HEIGHT = 34;
 
 const InstancesTable: React.FC = observer(() => {
+  const {t} = useLocalization();
   const {
     areProcessInstancesEmpty,
     state: {status, filteredProcessInstancesCount, processInstances},
@@ -97,7 +97,7 @@ const InstancesTable: React.FC = observer(() => {
   return (
     <Container aria-label="Process Instances Panel">
       <PanelHeader
-        title={t("Process Instances")}
+        title={t('Process Instances')}
         count={filteredProcessInstancesCount}
       />
       <Toolbar

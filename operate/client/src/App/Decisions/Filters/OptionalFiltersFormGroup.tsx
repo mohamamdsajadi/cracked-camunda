@@ -47,8 +47,6 @@ const optionalFilters: Array<OptionalFilter> = [
   'processInstanceId',
   'evaluationDateRange',
 ];
-const {t} = useLocalization();
-
 const OPTIONAL_FILTER_FIELDS: Record<
   OptionalFilter,
   {
@@ -74,7 +72,7 @@ const OPTIONAL_FILTER_FIELDS: Record<
   },
   processInstanceId: {
     keys: ['processInstanceId'],
-    label: t('Process Instance Key'),
+    label: 'Process Instance Key',
     type: 'text',
     validate: mergeValidators(
       validateParentInstanceIdComplete,
