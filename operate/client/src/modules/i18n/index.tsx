@@ -8,6 +8,7 @@
 
 import {
   createContext,
+  useEffect,
   useContext,
   useMemo,
   useState,
@@ -88,8 +89,17 @@ const localizationContext = createContext<LocalizationContextValue>({
   changeLanguage: () => {},
 });
 
+function syncDocumentDirection(language: string) {
+  document.documentElement.setAttribute('lang', language);
+  document.documentElement.setAttribute('dir', language === 'fa' ? 'rtl' : 'ltr');
+}
+
 const LocalizationProvider: FC<{children: ReactNode}> = ({children}) => {
   const [language, setLanguage] = useState(getInitialLanguage);
+
+  useEffect(() => {
+    syncDocumentDirection(language);
+  }, [language]);
 
   const value = useMemo(
     () => ({
