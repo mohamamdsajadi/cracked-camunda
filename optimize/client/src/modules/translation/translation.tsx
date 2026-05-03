@@ -14,6 +14,8 @@ import {loadDateTranslation} from 'dates';
 
 import {loadTranslation} from './service';
 
+const RTL_LANGUAGES = new Set(['ar', 'fa', 'he', 'ps', 'ur']);
+
 type PrimitiveValue = string | number | boolean;
 
 interface TranslationObject {
@@ -33,6 +35,7 @@ export function TranslationProvider({children}: {children: ReactNode}): JSX.Elem
     (async () => {
       const localeCode = getLanguage();
       document.documentElement.lang = localeCode;
+      document.documentElement.dir = RTL_LANGUAGES.has(localeCode) ? 'rtl' : 'ltr';
       await loadDateTranslation(localeCode);
       translationObject = await loadTranslation(await getOptimizeVersion(), localeCode);
       setTranslationLoaded(true);
