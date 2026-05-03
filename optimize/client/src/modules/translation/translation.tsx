@@ -17,6 +17,7 @@ import {loadTranslation} from './service';
 const RTL_LANGUAGES = new Set(['ar', 'fa', 'he', 'ps', 'ur']);
 export const LANGUAGE_STORAGE_KEY = 'optimize-locale';
 
+
 type PrimitiveValue = string | number | boolean;
 
 interface TranslationObject {
