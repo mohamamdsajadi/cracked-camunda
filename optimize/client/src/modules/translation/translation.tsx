@@ -14,6 +14,9 @@ import {loadDateTranslation} from 'dates';
 
 import {loadTranslation} from './service';
 
+const RTL_LANGUAGES = new Set(['ar', 'fa', 'he', 'ps', 'ur']);
+export const LANGUAGE_STORAGE_KEY = 'optimize-locale';
+
 type PrimitiveValue = string | number | boolean;
 
 interface TranslationObject {
@@ -33,6 +36,7 @@ export function TranslationProvider({children}: {children: ReactNode}): JSX.Elem
     (async () => {
       const localeCode = getLanguage();
       document.documentElement.lang = localeCode;
+      document.documentElement.dir = RTL_LANGUAGES.has(localeCode) ? 'rtl' : 'ltr';
       await loadDateTranslation(localeCode);
       translationObject = await loadTranslation(await getOptimizeVersion(), localeCode);
       setTranslationLoaded(true);
@@ -56,7 +60,16 @@ export function t(key: string, data?: TranslationObject): string | JSX.Element[]
   return translatedString;
 }
 
+export function setLanguagePreference(localeCode: string): void {
+  window.localStorage.setItem(LANGUAGE_STORAGE_KEY, localeCode.toLowerCase());
+}
+
 export function getLanguage(): string {
+  const persistedLocale = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+  if (persistedLocale) {
+    return persistedLocale.toLowerCase();
+  }
+
   const nav = window.navigator;
   const browserLang = (Array.isArray(nav.languages) ? nav.languages[0] : nav.language || '').split(
     '-'

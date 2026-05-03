@@ -10,7 +10,7 @@ import {runLastEffect} from '__mocks__/react';
 import * as request from 'request';
 import {shallow} from 'enzyme';
 
-import {t, TranslationProvider} from './translation';
+import {getLanguage, LANGUAGE_STORAGE_KEY, t, TranslationProvider} from './translation';
 
 jest.mock('config', () => ({
   getOptimizeVersion: () => '2.7.0',
@@ -58,6 +58,23 @@ it('return an error message if key does not exist', async () => {
   }
 });
 
+
+it('should set document direction to ltr for non-rtl locales', async () => {
+  expect(document.documentElement.lang).toBe('de');
+  expect(document.documentElement.dir).toBe('ltr');
+});
+
+it('should set document direction to rtl for rtl locales', async () => {
+  jest.spyOn(window.navigator, 'languages', 'get').mockReturnValue(['ar']);
+  jest.spyOn(request, 'get').mockResolvedValueOnce(createJSONResponse({homepage: 'الصفحة الرئيسية'}));
+
+  shallow(<TranslationProvider>content</TranslationProvider>);
+  runLastEffect();
+
+  expect(document.documentElement.lang).toBe('ar');
+  expect(document.documentElement.dir).toBe('rtl');
+});
+
 it('should get the language file depending on the browser language', async () => {
   expect((request.get as jest.Mock).mock.calls[0][1]).toEqual({localeCode: 'de', version: '2.7.0'});
 });
@@ -71,4 +88,10 @@ it('should convert html string to JSX', async () => {
   expect(node.find('a').text()).toBe('foo');
   expect(node.find('a').prop('href')).toBe('testUrl');
   expect(node.find('br')).toExist();
+});
+
+
+it('should prefer persisted locale over browser locale', async () => {
+  window.localStorage.setItem(LANGUAGE_STORAGE_KEY, 'fa');
+  expect(getLanguage()).toBe('fa');
 });

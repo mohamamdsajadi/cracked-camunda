@@ -6,4 +6,4 @@
  * except in compliance with the Camunda License 1.0.
  */
 
-export {setTranslation, TranslationProvider, t, getLanguage} from './translation';
+export {setTranslation, TranslationProvider, t, getLanguage, setLanguagePreference} from './translation';
