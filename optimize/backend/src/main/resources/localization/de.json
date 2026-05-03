@@ -25,7 +25,8 @@
     "termsOfUse": "Nutzungsbedingungen",
     "imprint": "Impressum",
     "academy": "Camunda Academy",
-    "feedback": "Feedback und Support"
+    "feedback": "Feedback und Support",
+    "language": "Sprache"
   },
   "login": {
     "label": "Einloggen",

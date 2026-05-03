@@ -10,7 +10,7 @@ import {runLastEffect} from '__mocks__/react';
 import * as request from 'request';
 import {shallow} from 'enzyme';
 
-import {t, TranslationProvider} from './translation';
+import {getLanguage, LANGUAGE_STORAGE_KEY, t, TranslationProvider} from './translation';
 
 jest.mock('config', () => ({
   getOptimizeVersion: () => '2.7.0',
@@ -88,4 +88,10 @@ it('should convert html string to JSX', async () => {
   expect(node.find('a').text()).toBe('foo');
   expect(node.find('a').prop('href')).toBe('testUrl');
   expect(node.find('br')).toExist();
+});
+
+
+it('should prefer persisted locale over browser locale', async () => {
+  window.localStorage.setItem(LANGUAGE_STORAGE_KEY, 'fa');
+  expect(getLanguage()).toBe('fa');
 });

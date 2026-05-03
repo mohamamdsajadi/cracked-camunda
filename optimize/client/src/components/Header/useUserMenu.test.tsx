@@ -15,6 +15,12 @@ import {isLogoutHidden} from 'config';
 
 import useUserMenu from './useUserMenu';
 
+jest.mock('translation', () => ({
+  t: (key: string) => key,
+  getLanguage: jest.fn().mockReturnValue('en'),
+  setLanguagePreference: jest.fn(),
+}));
+
 jest.mock('config', () => ({
   isLogoutHidden: jest.fn().mockReturnValue(false),
 }));
@@ -66,4 +72,18 @@ it('should display verison info in user menu', () => {
 
   const version = node.props().version;
   expect(version).toBe('1.0.0');
+});
+
+
+it('should render locale dropdown and persist selected locale', () => {
+  const reloadSpy = jest.spyOn(window.location, 'reload').mockImplementation(() => undefined);
+  const {setLanguagePreference} = jest.requireMock('translation');
+  const node = shallow(<UserMenu {...props} />);
+
+  const customSection = shallow(node.props().customElements.customSection);
+  customSection.find('select').simulate('change', {target: {value: 'fa'}});
+
+  expect(setLanguagePreference).toHaveBeenCalledWith('fa');
+  expect(reloadSpy).toHaveBeenCalled();
+  reloadSpy.mockRestore();
 });

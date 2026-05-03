@@ -11,7 +11,7 @@ import {useHistory} from 'react-router-dom';
 import {ArrowRight} from '@carbon/react/icons';
 import {C3NavigationProps} from '@camunda/camunda-composite-components';
 
-import {t} from 'translation';
+import {getLanguage, setLanguagePreference, t} from 'translation';
 import {isLogoutHidden} from 'config';
 import {showError} from 'notifications';
 import {useErrorHandling, useUser} from 'hooks';
@@ -37,7 +37,24 @@ export default function useUserMenu(optimizeVersion: string, timezone: string) {
           name: user?.name || '',
         },
       },
-      customSection: <div className="timezone">{timezone}</div>,
+      customSection: (
+        <div className="timezone">
+          <div>{timezone}</div>
+          <label htmlFor="locale-switcher">{t('navigation.language').toString()}</label>
+          <select
+            id="locale-switcher"
+            defaultValue={getLanguage()}
+            onChange={(event) => {
+              setLanguagePreference(event.target.value);
+              window.location.reload();
+            }}
+          >
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+            <option value="fa">فارسی</option>
+          </select>
+        </div>
+      ),
     },
     elements: [
       {
